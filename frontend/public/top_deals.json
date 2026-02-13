@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "title": "Projector",
+    "price": "6990",
+    "image": "/assets/product_images/projector.jpg"
+  },
+  {
+    "id": 2,
+    "title": "Watch",
+    "price": "6790",
+    "image": "/assets/product_images/watch.jpg"
+  },
+  {
+    "id": 3,
+    "title": "Monitors",
+    "price": "20990",
+    "image": "/assets/product_images/tv1.jpg"
+  },
+  {
+    "id": 4,
+    "price": "26990",
+    "title": "Monitor",
+    "image": "/assets/product_images/tv2.jpg"
+  },
+  {
+    "id": 5,
+    "title": "Cannon Camera",
+    "price": "10990",
+    "image": "/assets/product_images/canon.jpg"
+  }
+]

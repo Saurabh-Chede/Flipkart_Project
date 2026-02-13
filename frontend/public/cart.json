@@ -1,0 +1,34 @@
+[
+  {
+    "id": 101,
+    "title": "Samsung Smart TV",
+    "description": "43-inch Full HD Smart TV with vivid colors, powerful speakers, and built-in streaming apps.",
+    "price": 29999,
+    "qty": 1,
+    "image": "/assets/product_images/tv1.jpg"
+  },
+  {
+    "id": 102,
+    "title": "Canon DSLR Camera",
+    "description": "24MP DSLR camera with high-speed autofocus, full HD video recording, and interchangeable lenses.",
+    "price": 79999,
+    "qty": 2,
+    "image": "/assets/product_images/canon.jpg"
+  },
+  {
+    "id": 103,
+    "title": "Samsung Smart TV",
+    "description": "55-inch 4K Ultra HD Smart TV delivering crystal-clear picture quality and smart voice controls.",
+    "price": 79999,
+    "qty": 2,
+    "image": "/assets/product_images/tv2.jpg"
+  },
+  {
+    "id": 104,
+    "title": "Samsung Smart TV",
+    "description": "65-inch 4K Smart TV with HDR support, slim bezel design, and immersive surround sound.",
+    "price": 79999,
+    "qty": 2,
+    "image": "/assets/product_images/tv2.jpg"
+  }
+]

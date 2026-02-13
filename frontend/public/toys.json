@@ -1,0 +1,44 @@
+[
+  {
+    "id": 1,
+    "category": "Furniture",
+    "title": "Wooden Dining Table",
+    "price": 12999,
+    "image": "/assets/product_images/bed.jpg"
+  },
+  {
+    "id": 2,
+    "category": "Furniture",
+    "title": "Queen Size Bed",
+    "price": 24999,
+    "image": "/assets/product_images/bed3.jpg"
+  },
+  {
+    "id": 3,
+    "category": "Furniture",
+    "title": "King Size Bed",
+    "price": 32999,
+    "image": "/assets/product_images/bed2.jpg"
+  },
+  {
+    "id": 4,
+    "category": "Furniture",
+    "title": "Table",
+    "price": 28999,
+    "image": "/assets/product_images/table.jpg"
+  },
+  {
+    "id": 5,
+    "category": "Furniture",
+    "title": "Closet",
+    "price": 6999,
+    "image": "/assets/product_images/closet.jpg"
+  },
+  {
+    "id": 6,
+    "category": "Furniture",
+    "title": "King Size Bed 2",
+    "price": 18999,
+    "image": "/assets/product_images/bed2.jpg"
+  }
+]

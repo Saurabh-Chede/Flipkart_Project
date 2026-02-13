@@ -1,0 +1,82 @@
+[
+  {
+    "id": "101",
+    "name": "iPhone 15 Pro",
+    "price": 129900,
+    "category": "mobiles",
+    "image": "https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=800&q=80",
+    "description": "Titanium design with A17 Pro chip."
+  },
+  {
+    "id": "102",
+    "name": "Samsung Galaxy S23 Ultra",
+    "price": 104999,
+    "category": "mobiles",
+    "image": "https://images.unsplash.com/photo-1678911820864-e2c567c655d7?w=800&q=80",
+    "description": "200MP camera with integrated S-Pen."
+  },
+  {
+    "id": "103",
+    "name": "Sony WH-1000XM5",
+    "price": 29990,
+    "category": "headphones",
+    "image": "https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?w=800&q=80",
+    "description": "Industry leading noise cancellation."
+  },
+  {
+    "id": "104",
+    "name": "MacBook Air M3",
+    "price": 114900,
+    "category": "laptops",
+    "image": "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=800&q=80",
+    "description": "Supercharged by the latest M3 chip."
+  },
+  {
+    "id": "105",
+    "name": "Canon EOS R5",
+    "price": 329950,
+    "category": "camera",
+    "image": "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=800&q=80",
+    "description": "Professional full-frame mirrorless camera."
+  },
+  {
+    "id": "106",
+    "name": "Apple Watch Series 9",
+    "price": 41900,
+    "category": "wearables",
+    "image": "https://images.unsplash.com/photo-1434493789847-2f02dc6ca35d?w=800&q=80",
+    "description": "Advanced health sensors and faster chip."
+  },
+  {
+    "id": "107",
+    "name": "Dell XPS 13",
+    "price": 95000,
+    "category": "laptops",
+    "image": "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&q=80",
+    "description": "Compact design with stunning InfinityEdge display."
+  },
+  {
+    "id": "108",
+    "name": "Bose QuietComfort Ultra",
+    "price": 35900,
+    "category": "headphones",
+    "image": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&q=80",
+    "description": "Immersive sound with world-class quiet."
+  },
+  {
+    "id": "109",
+    "name": "Google Pixel 8 Pro",
+    "price": 106999,
+    "category": "mobiles",
+    "image": "https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=800&q=80",
+    "description": "The most advanced Pixel camera yet."
+  },
+  {
+    "id": "110",
+    "name": "iPad Pro M2",
+    "price": 81900,
+    "category": "tablets",
+    "image": "https://images.unsplash.com/photo-1585790050230-5dd28404ccb9?w=800&q=80",
+    "description": "Brilliant Liquid Retina XDR display."
+  }
+]
