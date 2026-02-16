@@ -9,6 +9,8 @@ import { Routes, Route } from "react-router-dom";
 import PaymentPage from './components/PaymentPage'
 import ProfilePage from './components/ProfilePage'
 import Layout from './components/Layout'
+import SellerHomePage from './components/SellerPage'
+import AddProductPage from './components/AddProductPage'
 
 function App() {
 
@@ -23,6 +25,8 @@ function App() {
         <Route path="/payment" element={<PaymentPage />} />
         <Route path="/orders" element={<OrderPage />} />
         <Route path="/myprofile" element={<ProfilePage />} />
+        <Route path="/seller" element={<SellerHomePage />} />
+        <Route path="/seller/addproduct" element={<AddProductPage />} />
       </Route>
     </Routes>
   )
