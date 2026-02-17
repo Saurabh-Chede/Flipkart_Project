@@ -10,6 +10,8 @@ import PaymentPage from './components/PaymentPage'
 import ProfilePage from './components/ProfilePage'
 import Layout from './components/Layout'
 import SellerHomePage from './components/SellerPage'
+import ViewProducts from './components/ViewProducts'
+import SingleProduct from './components/SingleProduct'
 import AddProductPage from './components/AddProductPage'
 
 function App() {
@@ -27,6 +29,8 @@ function App() {
         <Route path="/myprofile" element={<ProfilePage />} />
         <Route path="/seller" element={<SellerHomePage />} />
         <Route path="/seller/addproduct" element={<AddProductPage />} />
+        <Route path="/viewproducts" element={<ViewProducts />} />
+        <Route path="/singleproduct" element={<SingleProduct />} />
       </Route>
     </Routes>
   )
