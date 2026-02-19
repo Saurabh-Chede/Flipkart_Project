@@ -13,6 +13,8 @@ import SellerHomePage from './components/SellerPage'
 import ViewProducts from './components/ViewProducts'
 import SingleProduct from './components/SingleProduct'
 import AddProductPage from './components/AddProductPage'
+import SellerOrders from './components/SellerOrders'
+import SellerProfile from './components/SellerProfile'
 
 function App() {
 
@@ -31,6 +33,8 @@ function App() {
         <Route path="/seller/addproduct" element={<AddProductPage />} />
         <Route path="/viewproducts" element={<ViewProducts />} />
         <Route path="/editproduct" element={<SingleProduct />} />
+         <Route path="/sellerorders" element={<SellerOrders />} />
+          <Route path="/sellerprofile" element={<SellerProfile />} />
       </Route>
     </Routes>
   )
