@@ -1,14 +1,15 @@
-import React from "react";
+import { IoIosArrowRoundBack } from "react-icons/io";
+import { Link } from "react-router-dom";
 
 const SingleProduct = () => {
   return (
     <div className="min-h-screen bg-gray-100 p-4 lg:p-8">
-      <h1 className="text-2xl font-bold mb-6">Edit Product</h1>
+      <Link to='/' className="text-lg font-medium text-gray-600 mb-6 flex items-center gap-2"><IoIosArrowRoundBack /> back</Link>
 
       <div className="flex flex-col lg:flex-row gap-6">
 
         {/* Image Section */}
-        <div className="lg:w-1/3 bg-white p-5 rounded-xl shadow-sm">
+        <div className="lg:w-1/3 bg-white p-5 flex flex-col justify-between rounded-xl shadow-sm">
           <img
             src="https://rukminim2.flixcart.com/image/312/312/xif0q/mobile/3/5/l/-original-imaghx9qmgqsk9s4.jpeg?q=70"
             alt="product"
@@ -30,7 +31,7 @@ const SingleProduct = () => {
             <input
               type="text"
               defaultValue="iPhone 14"
-              className="w-full mt-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full mt-1 px-4 py-2 border border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
@@ -42,7 +43,7 @@ const SingleProduct = () => {
               <input
                 type="number"
                 defaultValue="79999"
-                className="w-full mt-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full mt-1 px-4 py-2 border border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
 
@@ -53,7 +54,7 @@ const SingleProduct = () => {
               <input
                 type="number"
                 defaultValue="12"
-                className="w-full mt-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full mt-1 px-4 py-2 border border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
           </div>
@@ -65,16 +66,16 @@ const SingleProduct = () => {
             <textarea
               rows="4"
               defaultValue="Latest iPhone model with advanced features."
-              className="w-full mt-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full mt-1 px-4 py-2 border border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
           <div className="flex gap-4">
-            <button className="bg-green-600 text-white px-5 py-2 rounded-lg hover:bg-green-700 transition">
+            <button className="bg-yellow-600 text-white px-2 lg:px-5 py-2 hover:bg-yellow-700 transition">
               Save Changes
             </button>
 
-            <button className="bg-red-600 text-white px-5 py-2 rounded-lg hover:bg-red-700 transition">
+            <button className="bg-orange-600 text-white px-2 lg:px-5 py-2  hover:bg-orange-700 transition">
               Delete Product
             </button>
           </div>
