@@ -15,6 +15,9 @@ import SingleProduct from './components/SingleProduct'
 import AddProductPage from './components/AddProductPage'
 import SellerOrders from './components/SellerOrders'
 import SellerProfile from './components/SellerProfile'
+import SingleSellerPage from './pages/SingleSellerPage'
+import AdminLayout from './pages/AdminLayout'
+import UsersPage from './pages/UsersPage'
 
 function App() {
 
@@ -33,8 +36,14 @@ function App() {
         <Route path="/seller/addproduct" element={<AddProductPage />} />
         <Route path="/viewproducts" element={<ViewProducts />} />
         <Route path="/editproduct" element={<SingleProduct />} />
-         <Route path="/sellerorders" element={<SellerOrders />} />
-          <Route path="/sellerprofile" element={<SellerProfile />} />
+        <Route path="/sellerorders" element={<SellerOrders />} />
+        <Route path="/sellerprofile" element={<SellerProfile />} />
+        <Route path="/adminlayout" element={<AdminLayout />} />
+        <Route path="/singlesellerpage" element={<SingleSellerPage />} />
+        <Route path="/userspage" element={<UsersPage />} />
+
+
+
       </Route>
     </Routes>
   )
