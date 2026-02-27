@@ -18,6 +18,8 @@ import SellerProfile from './components/SellerProfile'
 import SingleSellerPage from './pages/SingleSellerPage'
 import AdminLayout from './pages/AdminLayout'
 import UsersPage from './pages/UsersPage'
+import AllProductsPage from './pages/AllProductsPage'
+import SingleUserOrders from './pages/SingleUserOrders'
 
 function App() {
 
@@ -41,9 +43,8 @@ function App() {
         <Route path="/adminlayout" element={<AdminLayout />} />
         <Route path="/singlesellerpage" element={<SingleSellerPage />} />
         <Route path="/userspage" element={<UsersPage />} />
-
-
-
+        <Route path="/allproductspage" element={<AllProductsPage />} />
+        <Route path="/singleuserorders" element={<SingleUserOrders />} />
       </Route>
     </Routes>
   )
