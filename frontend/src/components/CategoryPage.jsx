@@ -71,7 +71,7 @@ export default function CategoryPage() {
                 <img
                   src={product.image}
                   alt={product.title}
-                  className="h-40 w-full object-cover rounded-md mb-3"
+                  className="h-40 w-full object-contain rounded-md mb-3"
                 />
 
                 <p className="text-sm font-medium mb-1">

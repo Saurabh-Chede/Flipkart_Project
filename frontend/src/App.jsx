@@ -20,6 +20,8 @@ import AdminLayout from './pages/AdminLayout'
 import UsersPage from './pages/UsersPage'
 import AllProductsPage from './pages/AllProductsPage'
 import SingleUserOrders from './pages/SingleUserOrders'
+import Login from './components/Login'
+import Register from "./components/Register"
 
 function App() {
 
@@ -28,18 +30,25 @@ function App() {
       <Route element={<Layout />}>
         <Route path="/" element={<HomePage />} />
         <Route path="/category/:id" element={<CategoryPage />} />
+
         <Route path="/cart" element={<Cart />} />
         <Route path="/product/:id" element={<ProductPage />} />
         <Route path="/wishlist" element={<Wishlist />} />
         <Route path="/payment" element={<PaymentPage />} />
         <Route path="/orders" element={<OrderPage />} />
         <Route path="/myprofile" element={<ProfilePage />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+
+
         <Route path="/seller" element={<SellerHomePage />} />
         <Route path="/seller/addproduct" element={<AddProductPage />} />
-        <Route path="/viewproducts" element={<ViewProducts />} />
-        <Route path="/editproduct" element={<SingleProduct />} />
-        <Route path="/sellerorders" element={<SellerOrders />} />
-        <Route path="/sellerprofile" element={<SellerProfile />} />
+        <Route path="seller/viewproducts" element={<ViewProducts />} />
+        <Route path="seller/editproduct" element={<SingleProduct />} />
+        <Route path="seller/orders" element={<SellerOrders />} />
+        <Route path="seller/profile" element={<SellerProfile />} />
+
+
         <Route path="/adminlayout" element={<AdminLayout />} />
         <Route path="/singlesellerpage" element={<SingleSellerPage />} />
         <Route path="/userspage" element={<UsersPage />} />
