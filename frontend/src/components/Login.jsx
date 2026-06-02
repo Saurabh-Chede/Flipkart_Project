@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Logo from "../assets/Logo.svg";
 
-export default function Login() {
+function Login() {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -83,3 +83,5 @@ export default function Login() {
     </div>
   );
 }
+
+export default Login
