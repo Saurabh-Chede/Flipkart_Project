@@ -41,10 +41,10 @@ export default function Navbar() {
         {/* RIGHT */}
         <div className="flex items-center gap-4 lg:basis-2/5 md:justify-between">
           {/* Login */}
-          <a href="/login" className="flex items-center gap-1">
+          <Link to="/login" className="flex items-center gap-1">
             <img src={profile} alt="profile" />
             <span>Login</span>
-          </a>
+          </Link>
 
           {/* Cart */}
           <Link to="/cart" className="flex items-center gap-1">
