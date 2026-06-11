@@ -1,14 +1,17 @@
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
 export default function MainProfile() {
   const [isEditingPersonal, setIsEditingPersonal] = useState(false);
   const [isEditingEmail, setIsEditingEmail] = useState(false);
   const [isEditingMobile, setIsEditingMobile] = useState(false);
+  const user = useSelector((state) => state.auth.user);
+  const firstName = user?.name?.split(" ")[0] || "";
+  const lastName = user?.name?.split(" ")[1] || "";
 
   return (
     <div className="min-h-screen max-w-4xl">
       <div className=" p-6 md:p-10 mx-auto bg-white space-y-8">
-
         {/* Personal Info */}
         <div className="">
           <div className="flex justify-between items-center mb-4">
@@ -24,13 +27,13 @@ export default function MainProfile() {
           <div className="grid grid-cols-2 gap-4">
             <input
               type="text"
-              placeholder="First Name"
+              value={firstName}
               disabled={!isEditingPersonal}
               className="border border-gray-200 p-2 rounded"
             />
             <input
               type="text"
-              placeholder="Last Name"
+              value={lastName}
               disabled={!isEditingPersonal}
               className="border border-gray-200 p-2 rounded"
             />
@@ -72,7 +75,7 @@ export default function MainProfile() {
           </div>
           <input
             type="email"
-            placeholder="Email"
+            value={user?.email}
             disabled={!isEditingEmail}
             className="border border-gray-200 p-2 w-full rounded"
           />
@@ -106,8 +109,8 @@ export default function MainProfile() {
                 What happens when I update my email or mobile?
               </h4>
               <p>
-                Your login details will change and account communication will
-                go to the updated contact.
+                Your login details will change and account communication will go
+                to the updated contact.
               </p>
             </div>
           </div>
@@ -118,9 +121,7 @@ export default function MainProfile() {
           <button className="text-blue-500 font-medium">
             Deactivate Account
           </button>
-          <button className="text-red-500 font-semibold">
-            Delete Account
-          </button>
+          <button className="text-red-500 font-semibold">Delete Account</button>
         </div>
       </div>
     </div>

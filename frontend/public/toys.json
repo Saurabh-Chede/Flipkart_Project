@@ -4,41 +4,41 @@
     "category": "Furniture",
     "title": "Wooden Dining Table",
     "price": 12999,
-    "image": "/assets/product_images/bed.jpg"
+    "image": "https://rukminim2.flixcart.com/fk-p-flap/380/510/image/fdd113657c8a190e.jpg?q=80"
   },
   {
     "id": 2,
     "category": "Furniture",
     "title": "Queen Size Bed",
     "price": 24999,
-    "image": "/assets/product_images/bed3.jpg"
+    "image": "https://rukminim2.flixcart.com/fk-p-flap/380/510/image/092acdd7fb96a42d.jpg?q=80"
   },
   {
     "id": 3,
     "category": "Furniture",
     "title": "King Size Bed",
     "price": 32999,
-    "image": "/assets/product_images/bed2.jpg"
+    "image": "https://rukminim2.flixcart.com/fk-p-flap/380/510/image/52b0b3a8bff8ad0d.jpg?q=80"
   },
   {
     "id": 4,
     "category": "Furniture",
     "title": "Table",
     "price": 28999,
-    "image": "/assets/product_images/table.jpg"
+    "image": "https://rukminim2.flixcart.com/fk-p-flap/380/510/image/b608506e601ecbe3.jpg?q=80"
   },
   {
     "id": 5,
     "category": "Furniture",
     "title": "Closet",
     "price": 6999,
-    "image": "/assets/product_images/closet.jpg"
+    "image": "https://rukminim2.flixcart.com/fk-p-flap/380/510/image/99e1ea28b5788dec.jpg?q=80"
   },
   {
     "id": 6,
     "category": "Furniture",
     "title": "King Size Bed 2",
     "price": 18999,
-    "image": "/assets/product_images/bed2.jpg"
+    "image": "https://rukminim2.flixcart.com/fk-p-flap/380/510/image/ca51ee5e41dcbd4e.jpg?q=80"
   }
 ]

@@ -1,7 +1,9 @@
 import profilePic from "../assets/profile-pic-male.svg";
 import MainProfile from "./MainProfile";
 import Sidebar from "./Sidebar";
+import {useSelector} from 'react-redux'
 export default function ProfilePage() {
+   const user = useSelector((state) => state.auth.user);
   return (
     <div className="bg-gray-200 min-h-screen">
       <div className="max-w-7xl mx-auto py-5 px-4">
@@ -11,7 +13,7 @@ export default function ProfilePage() {
           <div className="w-full md:w-1/4 flex flex-col gap-3.5">
             <div className="bg-white flex items-center justify-start gap-4 px-2 py-2 rounded-md">
               <img src={profilePic} alt="" />
-              <p className="text-lg text-gray-600 font-medium">Saurabh</p>
+              <p className="text-lg text-gray-600 font-medium">{user?.name || 'Guest'}</p>
             </div>
 
             <div className="bg-white flex-1 rounded-md">

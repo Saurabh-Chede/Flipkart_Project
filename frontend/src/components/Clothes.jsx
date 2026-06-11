@@ -1,62 +1,66 @@
+
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Clothes() {
   const [category, setCategory] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    setLoading(true);
+
     fetch("/clothes.json")
-      .then(res => res.json())
-      .then(data => setCategory(data));
+      .then((res) => res.json())
+      .then((data) => {
+        setCategory(data);
+        setLoading(false);
+      });
   }, []);
 
   return (
-    <section className="bg-gray-100 py-3">
-      <div
-        className="
-          max-w-7xl bg-white rounded-md
-          flex flex-col lg:flex-row
-          gap-4 md:mx-9 mx-2
-        "
-      >
-        {/* LEFT */}
-        <div className="flex-1 flex flex-col justify-between px-4 py-4">
-          <h2 className="text-[22px] font-semibold mb-3">
+    <section className="bg-gray-100 py-4">
+      <div className="max-w-7xl mx-auto px-4">
+
+        <div className="bg-white rounded-md shadow-sm p-4">
+
+          <h2 className="text-xl font-semibold mb-4">
             Trending Fashion
           </h2>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2">
-            {category.map(product => (
-              <Link
-                key={product.id}
-                to={`/product/${product.id}`}
-                className="
-                 flex flex-col items-center
-                  text-xs hover:text-blue-600 transition
-                "
-              >
-                <img
-                  src={product.image}
-                  alt={product.title}
-                  className="size-39.25 object-cover object-top rounded-md"
-                 
-                />
-                <p className="mt-2 text-center text-sm">
-                  {product.title}
-                </p>
-              </Link>
-            ))}
-          </div>
+          {loading ? (
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+              {Array(6).fill(0).map((_, i) => (
+                <div key={i} className="space-y-2 text-center">
+                  <Skeleton className="h-28 w-full rounded-lg" />
+                  <Skeleton className="h-4 w-20 mx-auto" />
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+
+              {category.map((product) => (
+                <Link
+                  key={product.id}
+                  to={`/product/${product.id}`}
+                  className="group flex flex-col items-center text-center"
+                >
+                  <div className="bg-white rounded-lg overflow-hidden shadow-sm group-hover:shadow-md transition flex items-center justify-center w-full">
+                    <img
+                      src={product.image}
+                      alt={product.title}
+                      className="max-h-full object-contain"
+                    />
+                  </div>
+                </Link>
+              ))}
+
+            </div>
+          )}
+
         </div>
 
-        {/* RIGHT BANNER */}
-        {/* <div className="hidden lg:block w-45">
-          <img
-            src="/assets/product_images/vertical_banner.png"
-            alt="Top deals banner"
-            className="w-full h-full object-cover"
-          />
-        </div> */}
       </div>
     </section>
   );

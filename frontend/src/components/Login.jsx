@@ -1,31 +1,61 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Logo from "../assets/Logo.svg";
+import { useDispatch } from "react-redux";
+import api from "../config/axiosConfig";
+import { login } from "../redux/authSlice";
 
 function Login() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    console.log("Login Data:", formData);
-
+  const handleChange = (event) => {
     setFormData({
-      email: "",
-      password: "",
+      ...formData,
+      [event.target.name]: event.target.value,
     });
+  };
 
-    navigate("/");
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    try {
+      if (!formData.email || !formData.password) {
+        return console.log("All fields are required");
+      }
+
+      const response = await api.post("/auth/login", formData);
+
+      if (response?.data?.success) {
+        console.log(response.data.message);
+
+        dispatch(login(response.data.user));
+
+        setFormData({
+          email: "",
+          password: "",
+        });
+
+        if (response.data.user.role === "seller") {
+          navigate("/seller/dashboard");
+        } else if (response.data.user.role === "admin") {
+          navigate("/admin/dashboard");
+        } else {
+          navigate("/");
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
     <div className="min-h-screen bg-black/50 flex justify-center items-center px-4">
-      <div className="bg-white w-full max-w-4xl h-132.5 flex flex-col md:flex-row rounded-sm overflow-hidden shadow-lg">
+      <div className="bg-white w-full max-w-4xl h-[530px] flex flex-col md:flex-row rounded-sm overflow-hidden shadow-lg">
         {/* Left Section */}
         <div className="bg-[#2874f0] text-white md:w-[40%] p-10 flex flex-col justify-between">
           <div>
@@ -35,25 +65,28 @@ function Login() {
               Get access to your Orders, Wishlist and Recommendations
             </p>
           </div>
-
-          <img
-            src={Logo}
-            alt="flipkart"
-            className="w-30 bg-amber-300 py-2 mx-auto"
-          />
         </div>
 
         {/* Right Section */}
-        <div className="md:w-[60%] p-8 flex flex-col h-full">
+        <form
+          onSubmit={handleSubmit}
+          className="md:w-[60%] p-8 flex flex-col h-full"
+        >
           <input
-            type="text"
-            placeholder="Enter Email/Mobile Number"
+            type="email"
+            name="email"
+            placeholder="Enter Email"
+            value={formData.email}
+            onChange={handleChange}
             className="border-b border-gray-300 py-3 outline-none focus:border-blue-500"
           />
 
           <input
             type="password"
+            name="password"
             placeholder="Enter Password"
+            value={formData.password}
+            onChange={handleChange}
             className="border-b border-gray-300 py-3 outline-none mt-8 focus:border-blue-500"
           />
 
@@ -63,7 +96,7 @@ function Login() {
           </p>
 
           <button
-            onClick={handleSubmit}
+            type="submit"
             className="bg-[#fb641b] hover:bg-[#f85606] text-white py-3 mt-8 font-medium shadow"
           >
             Login
@@ -78,10 +111,10 @@ function Login() {
               New to Flipkart? Create an account
             </button>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   );
 }
 
-export default Login
+export default Login;

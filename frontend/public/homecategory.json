@@ -30,18 +30,12 @@
   },
   {
     "id": 6,
-    "title": "Flight Bookings",
-    "image": "/assets/product_images/Flight Bookings.png"
-    
-  },
-  {
-    "id": 7,
     "title": "Beauty,Food",
     "image": "/assets/product_images/Food.png"
     ,"hasSub":"true"
   },
   {
-    "id": 8,
+    "id": 7,
     "title": "Grocerry",
     "image": "/assets/product_images/Grocerry.png"
   }

@@ -1,18 +1,29 @@
-import { useState } from "react";
+import api from "@/config/axiosConfig";
+import { useEffect, useState } from "react";
 
 export default function SellersPage() {
-  const sellers = [
-    { id: 1, name: "Rajesh Sharma", store: "RetailStore India", email: "rajesh@retailstoreindia.com", status: "Active" },
-    { id: 2, name: "Amit Kumar", store: "TechBazaar", email: "amit@techbazaar.com", status: "Inactive" },
-    { id: 3, name: "Sneha Patel", store: "FashionHub", email: "sneha@fashionhub.com", status: "Active" },
-    { id: 4, name: "Rahul Singh", store: "GadgetWorld", email: "rahul@gadgetworld.com", status: "Active" },
-    { id: 5, name: "Priya Verma", store: "BeautyStore", email: "priya@beautystore.com", status: "Inactive" },
-    { id: 6, name: "Ankit Mehra", store: "ElectroMart", email: "ankit@electromart.com", status: "Active" },
-    { id: 7, name: "Riya Kapoor", store: "StyleCorner", email: "riya@stylecorner.com", status: "Active" },
-    { id: 8, name: "Vikram Jain", store: "TechnoShop", email: "vikram@technoshop.com", status: "Inactive" },
-    { id: 9, name: "Neha Gupta", store: "HomeEssentials", email: "neha@homeessentials.com", status: "Active" },
-    { id: 10, name: "Karan Malhotra", store: "GadgetKing", email: "karan@gadgetking.com", status: "Active" },
-  ];
+
+  const [sellers,setSellers] = useState([])
+
+  const fetchSellers = async()=>{
+
+    try {
+      const response = await api.get('/admin/all-sellers')
+      console.log(response.data)
+
+      if(response.data.success){
+        setSellers(response.data.sellers)
+      }
+      
+    } catch (error) {
+      console.log(error)
+      
+    }
+  }
+
+  useEffect(()=>{
+    fetchSellers()
+  },[])
 
   // ---------------- Pagination State ----------------
   const [currentPage, setCurrentPage] = useState(1);
@@ -48,8 +59,8 @@ export default function SellersPage() {
 
           <tbody>
             {currentSellers.map((seller) => (
-              <tr key={seller.id} className="border-b border-gray-100 hover:bg-gray-50 transition">
-                <td className="px-4 py-3 text-sm">{seller.id}</td>
+              <tr key={seller._id} className="border-b border-gray-100 hover:bg-gray-50 transition">
+                <td className="px-4 py-3 text-sm">{seller._id}</td>
                 <td className="px-4 py-3 text-sm">{seller.name}</td>
                 <td className="px-4 py-3 text-sm">{seller.store}</td>
                 <td className="px-4 py-3 text-sm">{seller.email}</td>
