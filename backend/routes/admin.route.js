@@ -5,6 +5,7 @@ import {
   getUserById,
   approveSeller,
   rejectSeller,
+  getSellerRequests,
 } from "../controllers/admin.controller.js";
 import {
   verifyAndDecodeToken,
@@ -31,6 +32,12 @@ adminRouter.patch(
   verifyAndDecodeToken,
   isAdmin,
   rejectSeller,
+);
+adminRouter.get(
+  "/get-requests",
+  verifyAndDecodeToken,
+  isAdmin,
+  getSellerRequests,
 );
 
 export default adminRouter;

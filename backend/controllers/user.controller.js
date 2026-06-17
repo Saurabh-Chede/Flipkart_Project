@@ -34,6 +34,13 @@ export const applyForSeller = async (req, res) => {
       });
     }
 
+    if (user.sellerRequestStatus === "pending") {
+      return res.status(400).json({
+        success: false,
+        message: "Seller request already pending",
+      });
+    }
+
     user.sellerRequestStatus = "pending";
 
     await user.save();

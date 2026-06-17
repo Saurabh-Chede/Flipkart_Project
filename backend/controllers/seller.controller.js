@@ -1,4 +1,5 @@
 import ProductModel from "../models/product.model.js";
+import SellerModel from "../models/seller.model.js";
 
 export const addProduct = async (req, res) => {
   try {
@@ -66,3 +67,110 @@ export const getSellerProducts = async (req, res) => {
 export const deleteSellerProduct = async (req, res) => {};
 
 export const updateSellerProduct = async (req, res) => {};
+
+export const completeSellerProfile = async (req, res) => {
+  try {
+    const {
+      shopName,
+      gstNumber,
+      panNumber,
+      phone,
+      businessEmail,
+      address,
+      storeLogo,
+      bankDetails,
+    } = req.body;
+
+    const existingProfile = await SellerModel.findOne({
+      user: req.userId,
+    });
+
+    if (existingProfile) {
+      return res.status(400).json({
+        success: false,
+        message: "Seller profile already exists",
+      });
+    }
+
+    const sellerProfile = await SellerModel.create({
+      user: req.userId,
+      shopName,
+      gstNumber,
+      panNumber,
+      phone,
+      businessEmail,
+      address,
+      storeLogo,
+      bankDetails,
+    });
+
+    return res.status(201).json({
+      success: true,
+      message: "Seller profile completed successfully",
+      sellerProfile,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+export const updateSellerProfile = async (req, res) => {
+  try {
+    const sellerProfile = await SellerModel.findOneAndUpdate(
+      {
+        user: req.userId,
+      },
+      req.body,
+      {
+        new: true,
+        runValidators: true,
+      },
+    );
+
+    if (!sellerProfile) {
+      return res.status(404).json({
+        success: false,
+        message: "Seller profile not found",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Seller profile updated successfully",
+      sellerProfile,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+export const getSellerProfile = async (req, res) => {
+  try {
+    const sellerProfile = await SellerModel.findOne({
+      user: req.userId,
+    }).populate("user", "name email");
+
+    if (!sellerProfile) {
+      return res.status(404).json({
+        success: false,
+        message: "Seller profile not found",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      sellerProfile,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};

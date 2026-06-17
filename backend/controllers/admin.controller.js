@@ -97,3 +97,21 @@ export const rejectSeller = async (req, res) => {
     });
   }
 };
+
+export const getSellerRequests = async (req, res) => {
+  try {
+    const requests = await UserModel.find({
+      sellerRequestStatus: "pending",
+    }).select("name email sellerRequestStatus");
+
+    return res.status(200).json({
+      success: true,
+      requests,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
