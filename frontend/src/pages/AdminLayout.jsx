@@ -7,11 +7,13 @@ import {
   BarChart2,
   Settings,
   User,
+  UserRoundCheck,
 } from "lucide-react";
 
 import DashboardHome from "./DashboardHomePage";
 import SellersPage from "./SellersTable";
 import UsersPage from "./UsersPage";
+import SellerRequestsPage from "./admin/SellerRequestsPage";
 
 export default function AdminLayout() {
   const [activePage, setActivePage] = useState("home");
@@ -25,6 +27,8 @@ export default function AdminLayout() {
     { id: "categories", label: "Categories", icon: <BarChart2 size={18} /> },
     { id: "reports", label: "Reports", icon: <BarChart2 size={18} /> },
     { id: "settings", label: "Settings", icon: <Settings size={18} /> },
+    { id: "requests", label: "requests", icon: <UserRoundCheck size={18} /> },
+
   ];
 
   const renderPage = () => {
@@ -35,6 +39,8 @@ export default function AdminLayout() {
         return <SellersPage />;
       case "users":
         return <UsersPage />;
+        case "requests":
+        return <SellerRequestsPage />;
       default:
         return <DashboardHome />;
     }

@@ -27,6 +27,7 @@ import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { login, logout ,setLoading } from "./redux/authSlice";
 import ProtectedRoute from "./routes/ProtectedRoute";
+import BecomeSellerRequest from "./pages/user/BecomeSellerRequest";
 
 function App() {
   const dispatch = useDispatch();
@@ -54,9 +55,10 @@ function App() {
       <Route element={<Layout />}>
         <Route path="/" element={<HomePage />} />
         <Route path="/product/:id" element={<ProductPage />} />
-        <Route path="/category/:id" element={<CategoryPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/category/:category" element={<CategoryPage />} />
+
 
         <Route element={<ProtectedRoute allowedRoles={["user"]} />}>
           <Route path="/cart" element={<Cart />} />
@@ -64,6 +66,7 @@ function App() {
           <Route path="/payment" element={<PaymentPage />} />
           <Route path="/orders" element={<OrderPage />} />
           <Route path="/myprofile" element={<ProfilePage />} />
+          <Route path="/seller-request" element={<BecomeSellerRequest/>}/>
         </Route>
 
         <Route element={<ProtectedRoute allowedRoles={["seller"]} />}>

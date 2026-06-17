@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { ChevronDown } from "lucide-react";
 import Topdeals from "./Topdeals";
 import Clothes from "./Clothes";
 import Kidstoys from "./Kidstoys";
@@ -50,7 +49,7 @@ export default function HomePage() {
           {category.map((product) => (
             <Link
               key={product.id}
-              to={`/category/${product.id}`}
+              to={`/category/${product.category}`}
               className="flex flex-col items-center min-w-[80px] group"
             >
               {/* ICON BOX */}

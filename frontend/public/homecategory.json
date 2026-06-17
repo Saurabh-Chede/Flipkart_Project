@@ -2,41 +2,47 @@
   {
     "id": 1,
     "title": "Mobile & Tablets",
+    "category": "electronics",
     "image": "/assets/product_images/mobiles.png"
   },
   {
     "id": 2,
     "title": "Fashion",
+    "category": "clothing",
     "image": "/assets/product_images/fashion.png",
-    "hasSub":"false"
+    "hasSub": "false"
   },
   {
     "id": 3,
     "title": "Electronics",
+    "category": "electronics",
     "image": "/assets/product_images/Electronics.png",
-    "hasSub":"false"
-
+    "hasSub": "false"
   },
   {
     "id": 4,
     "title": "Tvs and Appliances",
+    "category": "electronics",
     "image": "/assets/product_images/Tv & Appliances.jpg"
   },
   {
     "id": 5,
     "title": "Home and Furniture",
-    "image": "/assets/product_images/Home and Furniture.png"
-    ,"hasSub":"true"
+    "category": "clothing",
+    "image": "/assets/product_images/Home and Furniture.png",
+    "hasSub": "true"
   },
   {
     "id": 6,
     "title": "Beauty,Food",
-    "image": "/assets/product_images/Food.png"
-    ,"hasSub":"true"
+    "category": "clothing",
+    "image": "/assets/product_images/Food.png",
+    "hasSub": "true"
   },
   {
     "id": 7,
     "title": "Grocerry",
+    "category": "footwear",
     "image": "/assets/product_images/Grocerry.png"
   }
 ]

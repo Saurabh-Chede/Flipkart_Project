@@ -57,6 +57,10 @@ export default function RoleDropdown() {
             <DropdownMenuItem asChild>
               <Link to="/wishlist">Wishlist</Link>
             </DropdownMenuItem>
+
+            <DropdownMenuItem asChild>
+              <Link to="/seller-request">BecomeSeller</Link>
+            </DropdownMenuItem>
           </>
         )}
 
