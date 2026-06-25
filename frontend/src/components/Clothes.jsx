@@ -43,7 +43,7 @@ export default function Clothes() {
               {category.map((product) => (
                 <Link
                   key={product.id}
-                  to={`/product/${product.id}`}
+                  to={`/category/clothing`}
                   className="group flex flex-col items-center text-center"
                 >
                   <div className="bg-white rounded-lg overflow-hidden shadow-sm group-hover:shadow-md transition flex items-center justify-center w-full">

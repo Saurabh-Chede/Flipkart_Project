@@ -1,12 +1,78 @@
-import { PieChart, Pie, Cell, Legend, Tooltip, ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid } from "recharts";
-import { Users, Box, Store, ShoppingCart, AlertCircle } from "lucide-react";
+import {
+  PieChart,
+  Pie,
+  Cell,
+  Legend,
+  Tooltip,
+  ResponsiveContainer,
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+} from "recharts";
+
+import {
+  Users,
+  Store,
+  ShoppingBag,
+  Package,
+  AlertCircle,
+} from "lucide-react";
+
+import { useState, useEffect } from "react";
+import api from "@/config/axiosConfig";
 
 export default function DashboardHome() {
+  const [dashboardStats, setDashboardStats] = useState({
+    totalUsers: 0,
+    totalSellers: 0,
+    totalProducts: 0,
+    totalOrders: 0,
+  });
+
+  const [recentOrders, setRecentOrders] = useState([]);
+  const [lowStock, setLowStock] = useState([]);
+
+  useEffect(() => {
+  const fetchStats = async () => {
+    try {
+      const res = await api.get("/admin/dashboard-stats");
+
+      setDashboardStats(res.data.stats);
+    } catch (err) {
+      console.log("Dashboard stats error:", err.message);
+    }
+  };
+
+  fetchStats();
+}, []);
+
   const stats = [
-    { label: "Total Users", value: 1240, icon: <Users size={20} />, color: "bg-blue-100 text-blue-600" },
-    { label: "Total Products", value: 548, icon: <Box size={20} />, color: "bg-purple-100 text-purple-600" },
-    { label: "Total Sellers", value: 72, icon: <Store size={20} />, color: "bg-green-100 text-green-600" },
-    { label: "Orders Today", value: 130, icon: <ShoppingCart size={20} />, color: "bg-yellow-100 text-yellow-600" },
+    {
+      label: "Total Users",
+      value: dashboardStats.totalUsers || 0,
+      icon: <Users className="w-5 h-5 text-blue-600" />,
+      color: "bg-blue-100",
+    },
+    {
+      label: "Total Sellers",
+      value: dashboardStats.totalSellers || 0,
+      icon: <Store className="w-5 h-5 text-green-600" />,
+      color: "bg-green-100",
+    },
+    {
+      label: "Total Products",
+      value: dashboardStats.totalProducts || 0,
+      icon: <Package className="w-5 h-5 text-orange-600" />,
+      color: "bg-orange-100",
+    },
+    {
+      label: "Total Orders",
+      value: dashboardStats.totalOrders || 0,
+      icon: <ShoppingBag className="w-5 h-5 text-purple-600" />,
+      color: "bg-purple-100",
+    },
   ];
 
   const orderStatus = [
@@ -23,6 +89,7 @@ export default function DashboardHome() {
     { name: "Mouse", value: 10 },
     { name: "Monitor", value: 10 },
   ];
+
   const COLORS = ["#4F46E5", "#10B981", "#F59E0B", "#EF4444", "#8B5CF6"];
 
   const salesData = [
@@ -34,19 +101,6 @@ export default function DashboardHome() {
     { month: "Jun", sales: 300 },
   ];
 
-  const recentOrders = [
-    { id: "ORD001", customer: "Saurabh", product: "Laptop", status: "Delivered", payment: "Paid" },
-    { id: "ORD002", customer: "Rahul", product: "Headphones", status: "Processing", payment: "Pending" },
-    { id: "ORD003", customer: "Anjali", product: "Keyboard", status: "Cancelled", payment: "Refunded" },
-    { id: "ORD004", customer: "Priya", product: "Mouse", status: "Pending", payment: "Pending" },
-  ];
-
-  const lowStock = [
-    { product: "Monitor", stock: 3 },
-    { product: "Keyboard", stock: 5 },
-    { product: "Mouse", stock: 2 },
-  ];
-
   const topCategories = [
     { category: "Electronics", value: 150 },
     { category: "Fashion", value: 120 },
@@ -55,27 +109,42 @@ export default function DashboardHome() {
 
   return (
     <div className="space-y-6 p-4 md:p-6 bg-gray-50">
-      <h1 className="text-2xl font-semibold text-gray-800">Dashboard Overview</h1>
+      <h1 className="text-2xl font-semibold text-gray-800">
+        Dashboard Overview
+      </h1>
 
-      {/* Stats Cards */}
+      {/* STATS */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
         {stats.map((stat, idx) => (
-          <div key={idx} className="bg-white rounded-xl shadow p-4 flex items-center gap-4 border border-gray-200">
-            <div className={`p-3 rounded-lg ${stat.color}`}>{stat.icon}</div>
+          <div
+            key={idx}
+            className="bg-white rounded-xl shadow p-4 flex items-center gap-4 border border-gray-200"
+          >
+            <div className={`p-3 rounded-lg ${stat.color}`}>
+              {stat.icon}
+            </div>
             <div>
               <p className="text-gray-500 text-sm">{stat.label}</p>
-              <p className="font-semibold text-lg text-gray-800">{stat.value}</p>
+              <p className="font-semibold text-lg text-gray-800">
+                {stat.value}
+              </p>
             </div>
           </div>
         ))}
       </div>
 
-      {/* Order Status */}
+      {/* ORDER STATUS */}
       <div className="bg-white rounded-xl shadow p-4 md:p-6 border border-gray-200">
-        <h2 className="text-lg font-semibold text-gray-800 mb-4">Orders Status</h2>
+        <h2 className="text-lg font-semibold text-gray-800 mb-4">
+          Orders Status
+        </h2>
+
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {orderStatus.map((item, idx) => (
-            <div key={idx} className={`p-4 rounded-lg flex flex-col items-center justify-center ${item.color}`}>
+            <div
+              key={idx}
+              className={`p-4 rounded-lg flex flex-col items-center justify-center ${item.color}`}
+            >
               <p className="text-sm font-medium">{item.status}</p>
               <p className="text-xl font-bold mt-2">{item.count}</p>
             </div>
@@ -83,94 +152,105 @@ export default function DashboardHome() {
         </div>
       </div>
 
-      {/* Charts */}
+      {/* CHARTS */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {/* Top Products Pie Chart */}
         <div className="bg-white rounded-xl shadow p-4 md:p-6 border border-gray-200">
-          <h2 className="text-lg font-semibold text-gray-800 mb-4">Top Products</h2>
-          <div className="w-full h-64 md:h-80">
-            <ResponsiveContainer width="100%" height="100%">
-              <PieChart>
-                <Pie
-                  data={topProducts}
-                  dataKey="value"
-                  nameKey="name"
-                  cx="50%"
-                  cy="50%"
-                  outerRadius={80}
-                  label
-                >
-                  {topProducts.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                  ))}
-                </Pie>
-                <Tooltip />
-                <Legend verticalAlign="bottom" height={36} />
-              </PieChart>
-            </ResponsiveContainer>
-          </div>
+          <h2 className="text-lg font-semibold text-gray-800 mb-4">
+            Top Products
+          </h2>
+
+          <ResponsiveContainer width="100%" height={300}>
+            <PieChart>
+              <Pie data={topProducts} dataKey="value" nameKey="name" outerRadius={80} label>
+                {topProducts.map((entry, index) => (
+                  <Cell key={index} fill={COLORS[index % COLORS.length]} />
+                ))}
+              </Pie>
+              <Tooltip />
+              <Legend />
+            </PieChart>
+          </ResponsiveContainer>
         </div>
 
-        {/* Sales Trend */}
         <div className="bg-white rounded-xl shadow p-4 md:p-6 border border-gray-200">
-          <h2 className="text-lg font-semibold text-gray-800 mb-4">Monthly Sales Trend</h2>
-          <div className="w-full h-64 md:h-80">
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={salesData} margin={{ top: 10, right: 20, left: 0, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="month" />
-                <YAxis />
-                <Tooltip />
-                <Legend />
-                <Line type="monotone" dataKey="sales" stroke="#4F46E5" strokeWidth={2} activeDot={{ r: 6 }} />
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
+          <h2 className="text-lg font-semibold text-gray-800 mb-4">
+            Monthly Sales Trend
+          </h2>
+
+          <ResponsiveContainer width="100%" height={300}>
+            <LineChart data={salesData}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="month" />
+              <YAxis />
+              <Tooltip />
+              <Line type="monotone" dataKey="sales" stroke="#4F46E5" strokeWidth={2} />
+            </LineChart>
+          </ResponsiveContainer>
         </div>
       </div>
 
-      {/* Recent Orders Table */}
+      {/* RECENT ORDERS */}
       <div className="overflow-x-auto bg-white rounded-xl shadow border border-gray-200 p-4">
-        <h2 className="text-lg font-semibold text-gray-800 mb-4">Recent Orders</h2>
+        <h2 className="text-lg font-semibold text-gray-800 mb-4">
+          Recent Orders
+        </h2>
+
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>
               {["Order ID", "Customer", "Product", "Status", "Payment"].map((head) => (
-                <th key={head} className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">{head}</th>
+                <th key={head} className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">
+                  {head}
+                </th>
               ))}
             </tr>
           </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
-            {recentOrders.map((order, idx) => (
-              <tr key={idx}>
-                <td className="px-4 py-2 whitespace-nowrap">{order.id}</td>
-                <td className="px-4 py-2 whitespace-nowrap">{order.customer}</td>
-                <td className="px-4 py-2 whitespace-nowrap">{order.product}</td>
-                <td className="px-4 py-2 whitespace-nowrap">{order.status}</td>
-                <td className="px-4 py-2 whitespace-nowrap">{order.payment}</td>
+
+          <tbody>
+            {recentOrders.length === 0 ? (
+              <tr>
+                <td colSpan={5} className="px-4 py-4 text-gray-500">
+                  No recent orders
+                </td>
               </tr>
-            ))}
+            ) : (
+              recentOrders.map((order, idx) => (
+                <tr key={idx}>
+                  <td className="px-4 py-2">{order.id}</td>
+                  <td className="px-4 py-2">{order.customer}</td>
+                  <td className="px-4 py-2">{order.product}</td>
+                  <td className="px-4 py-2">{order.status}</td>
+                  <td className="px-4 py-2">{order.payment}</td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>
 
-      {/* Low Stock Alerts */}
+      {/* LOW STOCK */}
       <div className="bg-white rounded-xl shadow p-4 md:p-6 border border-gray-200">
-        <h2 className="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
+        <h2 className="text-lg font-semibold flex items-center gap-2 mb-4">
           <AlertCircle size={20} /> Low Stock Alerts
         </h2>
+
         <ul className="list-disc list-inside">
-          {lowStock.map((item, idx) => (
-            <li key={idx} className="text-sm text-red-600 font-medium">
-              {item.product} – Only {item.stock} left in stock!
-            </li>
-          ))}
+          {lowStock.length === 0 ? (
+            <p className="text-gray-500">No low stock products</p>
+          ) : (
+            lowStock.map((item) => (
+              <li key={item._id} className="text-sm text-red-600 font-medium">
+                {item.name} – Only {item.stock} left
+              </li>
+            ))
+          )}
         </ul>
       </div>
 
-      {/* Top Categories */}
+      {/* TOP CATEGORIES */}
       <div className="bg-white rounded-xl shadow p-4 md:p-6 border border-gray-200">
-        <h2 className="text-lg font-semibold text-gray-800 mb-4">Top Categories</h2>
+        <h2 className="text-lg font-semibold mb-4">Top Categories</h2>
+
         <div className="flex flex-col gap-2">
           {topCategories.map((cat, idx) => (
             <div key={idx} className="flex justify-between text-sm">

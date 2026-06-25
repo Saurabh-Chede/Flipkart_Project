@@ -24,9 +24,6 @@ export default function AdminLayout() {
     { id: "users", label: "Users", icon: <User size={18} /> },
     { id: "products", label: "Products", icon: <Box size={18} /> },
     { id: "orders", label: "Orders", icon: <ShoppingCart size={18} /> },
-    { id: "categories", label: "Categories", icon: <BarChart2 size={18} /> },
-    { id: "reports", label: "Reports", icon: <BarChart2 size={18} /> },
-    { id: "settings", label: "Settings", icon: <Settings size={18} /> },
     { id: "requests", label: "requests", icon: <UserRoundCheck size={18} /> },
 
   ];

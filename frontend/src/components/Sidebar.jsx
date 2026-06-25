@@ -1,5 +1,5 @@
 import { AiOutlineLogout } from "react-icons/ai";
-import { Link, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logout } from "../redux/authSlice";
 import api from "../config/axiosConfig";
@@ -42,24 +42,17 @@ export default function Sidebar() {
 
         <div className="border-b border-b-gray-300">
 
-          <Link to="/account">
+          <NavLink to="/myprofile">
             <div className="px-12 py-3 hover:bg-gray-200 bg-blue-50 text-blue-600 text-sm">
               Profile Information
             </div>
-          </Link>
+          </NavLink>
 
-          <Link to="/account/addresses">
+          <NavLink to="/myprofile/addresses">
             <div className="px-12 py-3 hover:bg-gray-200 text-sm">
               Manage Addresses
             </div>
-          </Link>
-
-          <Link to="/account/pancard">
-            <div className="px-12 py-3 hover:bg-gray-200 text-sm">
-              PAN Card Information
-            </div>
-          </Link>
-
+          </NavLink>
         </div>
       </div>
 
@@ -73,23 +66,23 @@ export default function Sidebar() {
 
         <div className="border-b border-b-gray-300">
 
-          <Link to="/account/giftcards">
+          <NavLink to="/myprofile/giftcards">
             <div className="px-12 py-3 hover:bg-gray-200 text-sm">
               Gift Cards
             </div>
-          </Link>
+          </NavLink>
 
-          <Link to="/account/upi">
+          <NavLink to="/myprofile/upi">
             <div className="px-12 py-3 hover:bg-gray-200 text-sm">
               Saved UPI
             </div>
-          </Link>
+          </NavLink>
 
-          <Link to="/account/cards">
+          {/* <NavLink to="/myprofile/cards">
             <div className="px-12 py-3 hover:bg-gray-200 text-sm">
               Saved Cards
             </div>
-          </Link>
+          </NavLink> */}
 
         </div>
       </div>
@@ -104,29 +97,29 @@ export default function Sidebar() {
 
         <div className="border-b border-b-gray-300">
 
-          <Link to="/account/coupons">
+          <NavLink to="/account/coupons">
             <div className="px-12 py-3 hover:bg-gray-200 text-sm">
               My Coupons
             </div>
-          </Link>
+          </NavLink>
 
-          <Link to="/account/reviews">
+          <NavLink to="/account/reviews">
             <div className="px-12 py-3 hover:bg-gray-200 text-sm">
               My Reviews & Ratings
             </div>
-          </Link>
+          </NavLink>
 
-          <Link to="/account/notifications">
+          <NavLink to="/account/notifications">
             <div className="px-12 py-3 hover:bg-gray-200 text-sm">
               All Notifications
             </div>
-          </Link>
+          </NavLink>
 
-          <Link to="/wishlist">
+          <NavLink to="/myprofile/wishlist">
             <div className="px-12 py-3 hover:bg-gray-200 text-sm">
               My Wishlist
             </div>
-          </Link>
+          </NavLink>
 
         </div>
       </div>

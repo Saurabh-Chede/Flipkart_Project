@@ -28,21 +28,21 @@
   {
     "id": 5,
     "title": "Home and Furniture",
-    "category": "clothing",
+    "category": "furniture",
     "image": "/assets/product_images/Home and Furniture.png",
     "hasSub": "true"
   },
   {
     "id": 6,
     "title": "Beauty,Food",
-    "category": "clothing",
+    "category": "food",
     "image": "/assets/product_images/Food.png",
     "hasSub": "true"
   },
   {
     "id": 7,
     "title": "Grocerry",
-    "category": "footwear",
+    "category": "grocerry",
     "image": "/assets/product_images/Grocerry.png"
   }
 ]

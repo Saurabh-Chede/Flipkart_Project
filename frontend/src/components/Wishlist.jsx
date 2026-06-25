@@ -1,101 +1,238 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import api from "@/config/axiosConfig";
+
 import { FaTrash, FaShoppingCart } from "react-icons/fa";
+
+import {
+  Card,
+  CardContent,
+} from "@/components/ui/card";
+
+import { Button } from "@/components/ui/button";
+
+import {
+  ShoppingBag,
+  Heart,
+} from "lucide-react";
 
 export default function Wishlist() {
   const [wishlist, setWishlist] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const navigate = useNavigate();
+
   useEffect(() => {
-    fetch("/cart.json")
-      .then((res) => res.json())
-      .then((data) => {
-        setWishlist(data);
-        setLoading(false);
-      });
+    fetchWishlist();
   }, []);
 
-  const removeItem = (id) => {
-    setWishlist((prev) => prev.filter((item) => item.id !== id));
+  const fetchWishlist = async () => {
+    try {
+      setLoading(true);
+
+      const { data } = await api.get("/wishlist");
+
+      setWishlist(data.wishlist?.products || []);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const removeItem = async (productId) => {
+    try {
+      await api.delete(`/wishlist/remove/${productId}`);
+
+      setWishlist((prev) =>
+        prev.filter((item) => item._id !== productId)
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const moveToCart = async (productId) => {
+    try {
+      await api.post("/user/cart", {
+        productId,
+        quantity: 1,
+      });
+
+      await api.delete(`/wishlist/remove/${productId}`);
+
+      setWishlist((prev) =>
+        prev.filter((item) => item._id !== productId)
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const goToHomePage = () => {
+    navigate("/");
   };
 
   if (loading) {
-    return <p className="p-6 text-gray-600">Loading wishlist...</p>;
+    return (
+      <div className="flex justify-center items-center min-h-[60vh]">
+        <p className="text-muted-foreground">
+          Loading wishlist...
+        </p>
+      </div>
+    );
   }
 
   if (wishlist.length === 0) {
     return (
-      <div className="min-h-[60vh] flex flex-col items-center justify-center text-center bg-gray-100">
-        <h2 className="text-xl font-semibold mb-2">Your Wishlist is Empty</h2>
-        <p className="text-gray-500 mb-4">
-          Looks like you haven't added anything yet.
+      <div className="min-h-[70vh] flex flex-col items-center justify-center px-4">
+        <Heart className="h-16 w-16 text-muted-foreground mb-4" />
+
+        <h2 className="text-2xl font-bold mb-2">
+          Your Wishlist is Empty
+        </h2>
+
+        <p className="text-muted-foreground text-center mb-6">
+          Save items you like in your wishlist.
+          Review them anytime and easily move them to cart.
         </p>
-        <button className="bg-amber-600 text-white px-6 py-2 rounded-lg">
+
+        <Button onClick={goToHomePage}>
           Continue Shopping
-        </button>
+        </Button>
       </div>
     );
   }
 
   return (
-    <div className="bg-gray-100 py-6">
-      <div className="mx-4 lg:mx-auto max-w-5xl flex justify-center flex-col">
-        <h1 className="text-xl font-semibold text-gray-800 mb-6">
-          My Wishlist ({wishlist.length} items)
-        </h1>
+    <div className="bg-muted/30 min-h-screen py-8">
+      <div className="container mx-auto max-w-6xl px-4">
 
-        <div className="bg-white grid lg:grid-cols-2 rounded-md shadow-sm">
+        <div className="flex items-center gap-3 mb-8">
+          <Heart className="h-7 w-7" />
+
+          <div>
+            <h1 className="text-3xl font-bold">
+              My Wishlist
+            </h1>
+
+            <p className="text-muted-foreground">
+              {wishlist.length} item(s)
+            </p>
+          </div>
+        </div>
+
+        <div className="grid gap-4">
           {wishlist.map((item) => (
-            <div
-              key={item.id}
-              className="flex flex-col sm:flex-row gap-6 p-5 hover:bg-gray-50 transition border-b border-b-gray-300  "
+            <Card
+              key={item._id}
+              className="overflow-hidden"
             >
-              {/* Image */}
-              <img
-                src={item.image}
-                alt={item.title}
-                className="w-28 h-28 object-contain"
-                loading="lazy"
-              />
+              <CardContent className="p-0">
+                <div className="flex flex-col md:flex-row gap-6 p-6">
 
-              {/* Content */}
-              <div className="flex flex-1 flex-col justify-between">
-                <div>
-                  <h2 className="font-medium text-gray-800">
-                    {item.title}
-                  </h2>
-
-                  <div className="flex items-center gap-3 mt-2">
-                    <span className="text-lg font-semibold text-gray-900">
-                      ₹{item.price}
-                    </span>
-                    <span className="text-sm text-gray-500 line-through">
-                      ₹{item.price + 2000}
-                    </span>
-                    <span className="text-sm text-green-600 font-medium">
-                      10% off
-                    </span>
-                  </div>
-                </div>
-
-                {/* Buttons */}
-                <div className="flex gap-4 mt-4">
-                  <button className="flex items-center gap-2 bg-amber-600 hover:bg-amber-700 text-white px-5 py-2 rounded-lg text-sm transition">
-                    <FaShoppingCart />
-                    Move to Cart
-                  </button>
-
-                  <button
-                    onClick={() => removeItem(item.id)}
-                    className="flex items-center gap-2 text-gray-600 hover:text-red-600 text-sm transition"
+                  {/* Product Image */}
+                  <div
+                    onClick={() =>
+                      navigate(`/product/${item._id}`)
+                    }
+                    className="cursor-pointer"
                   >
-                    <FaTrash />
-                    Remove
-                  </button>
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="w-36 h-36 object-contain"
+                    />
+                  </div>
+
+                  {/* Product Info */}
+                  <div className="flex-1">
+                    <h2
+                      onClick={() =>
+                        navigate(`/product/${item._id}`)
+                      }
+                      className="font-semibold text-lg cursor-pointer hover:text-primary"
+                    >
+                      {item.name}
+                    </h2>
+
+                    <div className="flex items-center gap-3 mt-3">
+                      <span className="text-2xl font-bold">
+                        ₹{item.price?.toLocaleString()}
+                      </span>
+
+                      <span className="text-muted-foreground line-through">
+                        ₹
+                        {Math.round(
+                          item.price * 1.2
+                        ).toLocaleString()}
+                      </span>
+
+                      <span className="text-green-600 font-medium">
+                        20% OFF
+                      </span>
+                    </div>
+
+                    <p className="text-sm text-muted-foreground mt-3">
+                      {item.stock > 0
+                        ? `${item.stock} items available`
+                        : "Out of stock"}
+                    </p>
+
+                    <div className="flex flex-wrap gap-3 mt-6">
+
+                      <Button
+                        onClick={() =>
+                          moveToCart(item._id)
+                        }
+                        disabled={item.stock <= 0}
+                      >
+                        <FaShoppingCart />
+                        Move To Cart
+                      </Button>
+
+                      <Button
+                        variant="outline"
+                        onClick={() =>
+                          removeItem(item._id)
+                        }
+                      >
+                        <FaTrash />
+                        Remove
+                      </Button>
+
+                    </div>
+                  </div>
+
                 </div>
-              </div>
-            </div>
+              </CardContent>
+            </Card>
           ))}
         </div>
+
+        {/* Bottom Summary */}
+        <Card className="mt-8">
+          <CardContent className="p-6 flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <ShoppingBag className="h-5 w-5" />
+
+              <div>
+                <p className="font-medium">
+                  Total Wishlist Items
+                </p>
+
+                <p className="text-muted-foreground text-sm">
+                  {wishlist.length} products saved
+                </p>
+              </div>
+            </div>
+
+            <Button onClick={goToHomePage}>
+              Continue Shopping
+            </Button>
+          </CardContent>
+        </Card>
+
       </div>
     </div>
   );

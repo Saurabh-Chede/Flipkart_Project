@@ -1,75 +1,199 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import api from "@/config/axiosConfig";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
+
+import {
+  increaseQty,
+  decreaseQty,
+  removeFromCart,
+  fetchCart,
+} from "@/redux/cartSlice";
 
 export default function Cart() {
-  const [cart, setCart] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const { items, totalPrice } = useSelector((state) => state.cart);
 
   useEffect(() => {
-    fetch("/cart.json")
-      .then((res) => res.json())
-      .then((data) => {
-        setCart(data);
-        setLoading(false);
-      });
-  }, []);
+    dispatch(fetchCart());
+  }, [dispatch]);
 
-  if (loading) {
-    return <p className="p-4">Loading cart...</p>;
-  }
+  const handleIncrease = async (itemId) => {
+    dispatch(increaseQty(itemId));
+
+    try {
+      await api.patch("/user/cart-quantity", {
+        itemId,
+        type: "inc",
+      });
+    } catch (err) {
+      dispatch(fetchCart());
+    }
+  };
+
+  const handleDecrease = async (itemId) => {
+    dispatch(decreaseQty(itemId));
+
+    try {
+      await api.patch("/user/cart-quantity", {
+        itemId,
+        type: "dec",
+      });
+    } catch (err) {
+      dispatch(fetchCart());
+    }
+  };
+
+  const handleRemove = async (itemId) => {
+    dispatch(removeFromCart(itemId));
+
+    try {
+      await api.delete(`/user/remove-cart-item/${itemId}`);
+    } catch (err) {
+      dispatch(fetchCart());
+    }
+  };
+
+  const handlebuy = () => {
+    navigate("/checkout");
+  };
 
   return (
-    <div className="bg-gray-100 py-3.5">
-      <div className="mx-4 md:mx-9 rounded-md">
-        {/* 👇 items-start is IMPORTANT */}
-        <div className="flex gap-4 flex-col md:flex-row items-start">
-          {/* LEFT - CART ITEMS */}
-          <div className="md:basis-4/6 w-full bg-white flex flex-col gap-3 rounded-md">
-            {cart.map((item) => (
-              <div
-                key={item.id}
-                className="flex gap-4 py-6 px-4 border-b border-b-gray-300"
-              >
-                <img
-                  src={item.image}
-                  alt={item.title}
-                  className="w-24 h-24 object-contain"
-                  loading="lazy"
-                />
+    <div className="bg-muted min-h-screen p-4 md:p-8">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {/* CART ITEMS */}
+        <div className="md:col-span-2 space-y-4">
+          {items.length === 0 ? (
+            <Card>
+              <CardContent className="p-6 text-muted-foreground">
+                Cart is empty
+              </CardContent>
+            </Card>
+          ) : (
+            items.map((item) => {
+              const finalPrice =
+                item.product?.price -
+                (item.product?.price *
+                  (item.product?.discountPercentage || 0)) /
+                  100;
 
-                <div className="flex-1">
-                  <h2 className="font-medium">{item.title}</h2>
-                  <p className="text-gray-600">₹{item.price}</p>
-                  <p className="text-sm">Qty: {item.qty}</p>
-                </div>
-              </div>
-            ))}
-          </div>
+              return (
+                <Card key={item._id}>
+                  <CardContent className="flex gap-4 p-4">
+                    <img
+                      src={item.product?.image}
+                      alt={item.product?.name}
+                      className="w-24 h-24 object-contain"
+                    />
 
-          {/* RIGHT - STICKY PRICE DETAILS */}
-          <aside className="md:basis-2/6 w-full bg-white sticky top-20 h-fit self-start rounded-md">
-            <h2 className="font-semibold mb-3 border-b text-gray-500 border-b-gray-300 py-2 px-4">
-              PRICE DETAILS
-            </h2>
+                    <div className="flex-1 space-y-2">
+                      <h2 className="font-medium text-lg">
+                        {item.product?.name}
+                      </h2>
 
-            <div className="space-y-2 text-sm">
-              {cart.map((item) => (
-                <div key={item.id} className="flex justify-between px-4">
-                  <span>{item.title}</span>
-                  <span>₹{item.price * item.qty}</span>
-                </div>
-              ))}
-            </div>
+                      <div>
+                        <p className="text-lg font-bold">
+                          ₹{finalPrice}
+                        </p>
 
-            <hr className="my-3 text-gray-300" />
+                        {(item.product?.discountPercentage || 0) > 0 && (
+                          <>
+                            <p className="text-sm text-gray-500 line-through">
+                              ₹{item.product?.price}
+                            </p>
 
-            <div className="flex justify-between font-semibold px-4 pb-3">
-              <span>Total</span>
-              <span>
-                ₹{cart.reduce((sum, item) => sum + item.price * item.qty, 0)}
-              </span>
-            </div>
-          </aside>
+                            <p className="text-green-600 text-sm font-medium">
+                              {item.product?.discountPercentage}% OFF
+                            </p>
+                          </>
+                        )}
+                      </div>
+
+                      <div className="flex gap-2 items-center">
+                        <Button
+                          size="sm"
+                          onClick={() => handleDecrease(item._id)}
+                        >
+                          -
+                        </Button>
+
+                        <span className="font-medium">
+                          {item.quantity}
+                        </span>
+
+                        <Button
+                          size="sm"
+                          onClick={() => handleIncrease(item._id)}
+                        >
+                          +
+                        </Button>
+                      </div>
+
+                      <Button
+                        variant="destructive"
+                        onClick={() => handleRemove(item._id)}
+                      >
+                        Remove
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              );
+            })
+          )}
         </div>
+
+        {/* PRICE DETAILS */}
+        <Card className="h-fit sticky top-6">
+          <CardHeader>
+            <CardTitle>Price Details</CardTitle>
+          </CardHeader>
+
+          <CardContent className="space-y-3">
+            {items.map((item) => {
+              const finalPrice =
+                item.product?.price -
+                (item.product?.price *
+                  (item.product?.discountPercentage || 0)) /
+                  100;
+
+              return (
+                <div
+                  key={item._id}
+                  className="flex justify-between text-sm"
+                >
+                  <span>{item.product?.name}</span>
+
+                  <span>
+                    ₹{finalPrice * item.quantity}
+                  </span>
+                </div>
+              );
+            })}
+
+            <Separator />
+
+            <div className="flex justify-between font-bold text-lg">
+              <span>Total</span>
+
+              {/* Redux totalPrice abhi bhi original price use kar sakta hai */}
+              <span>₹{totalPrice}</span>
+            </div>
+
+            <Button
+              onClick={handlebuy}
+              className="w-full mt-4"
+            >
+              Buy Now
+            </Button>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );

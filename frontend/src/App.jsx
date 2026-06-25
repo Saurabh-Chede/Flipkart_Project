@@ -25,30 +25,39 @@ import Register from "./components/Register";
 import api from "./config/axiosConfig";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { login, logout ,setLoading } from "./redux/authSlice";
+import { login, logout, setLoading } from "./redux/authSlice";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import BecomeSellerRequest from "./pages/user/BecomeSellerRequest";
+import { fetchCart } from "./redux/cartSlice";
+import MainProfile from "./components/MainProfile";
+import Addresses from "./components/Addresses";
+import CheckoutPage from "./components/CheckoutPage";
+import OrderSuccess from "./pages/user/OrderSuccess";
+import SellerOrderDetails from "./pages/seller/SellerOrderDetails";
 
 function App() {
   const dispatch = useDispatch();
-  const getLoggedInUser = async () => {
-    try {
-      const response = await api.get("/auth/me");
-
-      if (response.data.user) {
-        dispatch(login(response.data.user));
-      }
-    } catch (error) {
-      // 🔥 IMPORTANT: clear redux state
-      dispatch(logout());
-    }finally {
-    dispatch(setLoading(false));
-  }
-  };
 
   useEffect(() => {
+    const getLoggedInUser = async () => {
+      try {
+        const response = await api.get("/auth/me");
+
+        if (response.data.user) {
+          dispatch(login(response.data.user));
+        }
+      } catch (error) {
+        dispatch(logout());
+      } finally {
+        dispatch(setLoading(false));
+      }
+    };
+
     getLoggedInUser();
-  }, []);
+
+    // 🔥 IMPORTANT FIX FOR CART BADGE
+    dispatch(fetchCart());
+  }, [dispatch]);
 
   return (
     <Routes>
@@ -59,14 +68,22 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/category/:category" element={<CategoryPage />} />
 
-
         <Route element={<ProtectedRoute allowedRoles={["user"]} />}>
-          <Route path="/cart" element={<Cart />} />
+          <Route path="/viewcart" element={<Cart />} />
           <Route path="/wishlist" element={<Wishlist />} />
-          <Route path="/payment" element={<PaymentPage />} />
+          <Route path="/payment/:orderId" element={<PaymentPage />} />
           <Route path="/orders" element={<OrderPage />} />
-          <Route path="/myprofile" element={<ProfilePage />} />
-          <Route path="/seller-request" element={<BecomeSellerRequest/>}/>
+          <Route path="/seller-request" element={<BecomeSellerRequest />} />
+          <Route path="/checkout" element={<CheckoutPage />} />
+          <Route path="/order-success/:id" element={<OrderSuccess />} />
+
+          <Route path="/myprofile" element={<ProfilePage />}>
+            <Route index element={<MainProfile />} />
+            <Route path="profile" element={<MainProfile />} />
+            <Route path="orders" element={<OrderPage />} />
+            <Route path="wishlist" element={<Wishlist />} />
+            <Route path="addresses" element={<Addresses />} />
+          </Route>
         </Route>
 
         <Route element={<ProtectedRoute allowedRoles={["seller"]} />}>
@@ -76,6 +93,7 @@ function App() {
           <Route path="/seller/editproduct" element={<SingleProduct />} />
           <Route path="/seller/orders" element={<SellerOrders />} />
           <Route path="/seller/profile" element={<SellerProfile />} />
+          <Route path="/seller/orders/:id" element={<SellerOrderDetails />} />
         </Route>
 
         <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
