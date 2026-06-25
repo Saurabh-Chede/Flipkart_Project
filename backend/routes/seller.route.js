@@ -3,8 +3,14 @@ import {
   addProduct,
   completeSellerProfile,
   deleteSellerProduct,
+  getSellerDashboardStats,
+  getSellerLowStock,
+  getSellerOrderById,
+  getSellerOrders,
   getSellerProducts,
   getSellerProfile,
+  getSellerRecentOrders,
+  updateSellerOrderStatus,
   updateSellerProduct,
   updateSellerProfile,
 } from "../controllers/seller.controller.js";
@@ -54,5 +60,32 @@ sellerRouter.patch(
 );
 
 sellerRouter.get("/profile", verifyAndDecodeToken, isSeller, getSellerProfile);
+
+sellerRouter.get('/dashboard/stats',verifyAndDecodeToken,isSeller,getSellerDashboardStats)
+
+sellerRouter.get('/low-stock',verifyAndDecodeToken,isSeller,getSellerLowStock)
+
+sellerRouter.get('/recent-orders',verifyAndDecodeToken,isSeller,getSellerRecentOrders)
+
+sellerRouter.get(
+  "/orders",
+  verifyAndDecodeToken,
+  isSeller,
+  getSellerOrders
+);
+
+sellerRouter.get(
+  "/orders/:id",
+  verifyAndDecodeToken,
+  isSeller,
+  getSellerOrderById
+);
+
+sellerRouter.patch(
+  "/orders/:id/status",
+  verifyAndDecodeToken,
+  isSeller,
+  updateSellerOrderStatus
+);
 
 export default sellerRouter;

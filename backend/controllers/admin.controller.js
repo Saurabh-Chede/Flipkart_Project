@@ -1,4 +1,7 @@
 import UserModel from "../models/user.model.js";
+import SellerModel from "../models/seller.model.js";
+import ProductModel from "../models/product.model.js";
+import OrderModel from "../models/order.model.js";
 
 export const getAllUsers = async (req, res) => {
   try {
@@ -110,6 +113,37 @@ export const getSellerRequests = async (req, res) => {
     });
   } catch (error) {
     return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+export const getDashboardStats = async (req, res) => {
+  try {
+    const [
+      totalUsers,
+      totalSellers,
+      totalProducts,
+      totalOrders,
+    ] = await Promise.all([
+      UserModel.countDocuments({ role: "user" }),
+      UserModel.countDocuments({ role: "seller" }),
+      ProductModel.countDocuments(),
+      OrderModel.countDocuments(),
+    ]);
+
+    res.status(200).json({
+      success: true,
+      stats: {
+        totalUsers,
+        totalSellers,
+        totalProducts,
+        totalOrders,
+      },
+    });
+  } catch (error) {
+    res.status(500).json({
       success: false,
       message: error.message,
     });

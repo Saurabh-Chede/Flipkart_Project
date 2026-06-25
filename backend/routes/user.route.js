@@ -8,6 +8,13 @@ import {
   placeOrder,
   updateUserProfile,
   applyForSeller,
+  updateCartQuantity,
+  removeFromCart,
+  createAddress,
+  getAddresses,
+  updateAddress,
+  setDefaultAddress,
+  deleteAddress,
 } from "../controllers/user.controller.js";
 import { verifyAndDecodeToken } from "../middlewares/auth.middleware.js";
 
@@ -21,5 +28,12 @@ userRouter.get("/get-cart-products", verifyAndDecodeToken, getCartProducts);
 userRouter.post("/place-orders", verifyAndDecodeToken, placeOrder);
 userRouter.post("/apply-coupon", verifyAndDecodeToken, applyCoupon);
 userRouter.post("/apply-seller", verifyAndDecodeToken, applyForSeller);
+userRouter.patch('/cart-quantity',verifyAndDecodeToken,updateCartQuantity)
+userRouter.delete('/remove-cart-item/:itemId',verifyAndDecodeToken,removeFromCart)
+userRouter.post('/create-address',verifyAndDecodeToken,createAddress)
+userRouter.get('/all-addresses',verifyAndDecodeToken,getAddresses)
+userRouter.put('/update-address',verifyAndDecodeToken,updateAddress)
+userRouter.patch('/set-default-address/:id',verifyAndDecodeToken,setDefaultAddress)
+userRouter.delete('/delete-address/:id',verifyAndDecodeToken,deleteAddress)
 
 export default userRouter;
