@@ -42,6 +42,16 @@ const ProductSchema = new Schema({
     ref: "User",
     required: true,
   },
+
+  ratings: {
+    type: Number,
+    default: 0,
+  },
+
+  numReviews: {
+    type: Number,
+    default: 0,
+  },
 });
 
 const ProductModel = model("Product", ProductSchema);

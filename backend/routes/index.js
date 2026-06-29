@@ -6,6 +6,7 @@ import sellerRouter from './seller.route.js'
 import productRouter from './product.route.js'
 import orderRouter from "./order.route.js";
 import wishlistRouter from "./wishlist.route.js";
+import reviewRouter from './review.route.js'
 
 const mainRouter = Router();
 
@@ -16,5 +17,6 @@ mainRouter.use("/product", productRouter);
 mainRouter.use("/seller", sellerRouter);
 mainRouter.use("/order",orderRouter)
 mainRouter.use('/wishlist',wishlistRouter)
+mainRouter.use('/reviews',reviewRouter)
 
 export default mainRouter;
