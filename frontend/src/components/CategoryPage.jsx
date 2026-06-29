@@ -6,13 +6,13 @@ export default function CategoryPage() {
   const { category } = useParams();
 
   const categories = [
-  "electronics",
-  "clothing",
-  "furniture",
-  "food",
-  "grocerry",
-  "fashion",
-];
+    "electronics",
+    "clothing",
+    "furniture",
+    "food",
+    "grocerry",
+    "fashion",
+  ];
 
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
@@ -70,7 +70,6 @@ export default function CategoryPage() {
 
   return (
     <div className="bg-[#f1f3f6] min-h-screen">
-
       {/* CATEGORY NAV */}
       <div className="bg-white border-b">
         <div className="max-w-7xl mx-auto px-4 py-3 flex gap-6 text-sm font-medium overflow-x-auto scrollbar-hide">
@@ -94,7 +93,7 @@ export default function CategoryPage() {
       </div>
 
       {/* MAIN */}
-      <div className="max-w-7xl mx-auto px-4 py-4 flex gap-4">
+      <div className="max-w-7xl mx-auto px-2 py-2 flex gap-2">
         {/* FILTERS */}
         <aside className="hidden md:block w-64 bg-white p-4 rounded-sm">
           <h4 className="text-base font-semibold mb-4">Filters</h4>
@@ -144,7 +143,7 @@ export default function CategoryPage() {
         {/* PRODUCTS */}
         <main className="flex-1">
           {/* SORT BAR */}
-          <div className="bg-white px-4 py-3 mb-4 flex gap-6 text-sm">
+          <div className="bg-white px-4 py-3 mb-2 flex gap-6 text-sm">
             <span className="font-semibold">Sort By</span>
 
             <button
@@ -187,34 +186,92 @@ export default function CategoryPage() {
             </div>
           ) : (
             <>
-              <div className="mb-4 text-sm text-gray-600">
+              {/* <div className="mb-4 text-sm text-gray-600">
                 {filteredProducts.length} Products Found
-              </div>
+              </div> */}
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-2">
+                {filteredProducts.map((product) => {
+                  const finalPrice =
+                    product.price -
+                    (product.price * (product.discountPercentage || 0)) / 100;
 
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-                {filteredProducts.map((product) => (
-                  <Link
-                    to={`/product/${product._id}`}
-                    key={product._id}
-                    className="bg-white p-3 rounded-sm hover:shadow-md transition"
-                  >
-                    <img
-                      src={product.image}
-                      alt={product.name}
-                      className="h-40 w-full object-contain rounded-md mb-3"
-                    />
+                  return (
+                    <Link
+                      to={`/product/${product._id}`}
+                      key={product._id}
+                      className="group bg-white border border-gray-200 rounded-sm p-3 hover:shadow-lg transition-all duration-200"
+                    >
+                      {/* Product Image */}
+                      <div className="relative h-48 flex items-center justify-center overflow-hidden">
+                        {product.stock <= 0 && (
+                          <span className="absolute top-2 left-2 bg-red-600 text-white text-xs px-2 py-1 rounded z-10">
+                            Out of Stock
+                          </span>
+                        )}
 
-                    <p className="text-sm font-medium mb-1 line-clamp-2">
-                      {product.name}
-                    </p>
+                        <img
+                          src={product.image}
+                          alt={product.name}
+                          className={`max-h-full object-contain transition-transform duration-300 group-hover:scale-105 ${
+                            product.stock <= 0 ? "opacity-50" : ""
+                          }`}
+                        />
+                      </div>
 
-                    <p className="text-green-600 font-semibold">
-                      ₹{product.price}
-                    </p>
+                      {/* Product Name */}
+                      <h3 className="mt-3 text-sm text-gray-800 line-clamp-2 leading-5 group-hover:text-blue-600">
+                        {product.name}
+                      </h3>
 
-                    <p className="text-xs text-gray-500 mt-1">Free Delivery</p>
-                  </Link>
-                ))}
+                      {/* Rating */}
+                      <div className="flex items-center gap-2 mt-2">
+                        <span className="bg-green-600 text-white text-[11px] px-1.5 py-0.5 rounded flex items-center">
+                          {product.ratings?.toFixed(1) || "0.0"}
+                          <span className="ml-1">★</span>
+                        </span>
+
+                        <span className="text-xs text-gray-500">
+                          ({product.numReviews || 0})
+                        </span>
+                      </div>
+
+                      {/* Price */}
+                      <div className="flex items-center gap-2 mt-2 flex-wrap">
+                        <span className="text-lg font-semibold text-gray-900">
+                          ₹{finalPrice.toLocaleString()}
+                        </span>
+
+                        {(product.discountPercentage || 0) > 0 && (
+                          <>
+                            <span className="text-sm text-gray-500 line-through">
+                              ₹{product.price.toLocaleString()}
+                            </span>
+
+                            <span className="text-sm text-green-600 font-medium">
+                              {product.discountPercentage}% OFF
+                            </span>
+                          </>
+                        )}
+                      </div>
+
+                      {/* Stock Status */}
+                      {product.stock > 0 ? (
+                        <p className="text-xs text-green-600 mt-2">
+                          In Stock ({product.stock} left)
+                        </p>
+                      ) : (
+                        <p className="text-xs text-red-600 mt-2 font-medium">
+                          Currently Unavailable
+                        </p>
+                      )}
+
+                      {/* Delivery */}
+                      <p className="text-xs text-gray-500 mt-1">
+                        Free Delivery
+                      </p>
+                    </Link>
+                  );
+                })}
               </div>
             </>
           )}

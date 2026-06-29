@@ -36,13 +36,13 @@ export default function RoleDropdown() {
     <DropdownMenu>
       {/* TRIGGER */}
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" className="flex gap-2">
+        <Button variant="outline" className="flex rounded-none gap-2 focus-visible:ring-0 focus-visible:ring-offset-0 focus:outline-none">
           {user?.name || "Account"}
         </Button>
       </DropdownMenuTrigger>
 
       {/* CONTENT */}
-      <DropdownMenuContent align="end" className="w-56">
+      <DropdownMenuContent align="end" className="w-56 rounded-none">
         {/* USER SECTION */}
         {user?.role === "user" && (
           <>

@@ -2,10 +2,13 @@ import { useEffect, useState } from "react";
 import api from "@/config/axiosConfig";
 import { FaChevronRight } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
+import WriteReviewDialog from "./common/WriteReviewDialog";
 
 export default function OrderPage() {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [openReview, setOpenReview] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
   useEffect(() => {
     fetchOrders();
@@ -31,9 +34,26 @@ export default function OrderPage() {
         prev.map((order) =>
           order._id === orderId
             ? { ...order, orderStatus: "CANCELLED" }
-            : order
-        )
+            : order,
+        ),
       );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleReviewSubmit = async ({ rating, comment }) => {
+    try {
+      await api.post("/reviews", {
+        productId: selectedProduct.productId,
+        rating,
+        comment,
+      });
+
+      setOpenReview(false);
+      setSelectedProduct(null);
+
+      alert("Review Added Successfully");
     } catch (error) {
       console.log(error);
     }
@@ -52,7 +72,6 @@ export default function OrderPage() {
   return (
     <div className="bg-gray-200 min-h-screen py-4">
       <div className="max-w-5xl mx-4 md:mx-auto bg-white shadow-sm">
-
         {/* Breadcrumb */}
         <div className="py-3 flex items-center px-4 gap-2 text-sm">
           <p className="text-gray-400">My Account</p>
@@ -62,20 +81,13 @@ export default function OrderPage() {
 
         {/* Order Cards */}
         <div className="flex flex-col gap-3 mt-3 mx-2 py-2">
-
           {orders.length === 0 ? (
             <div className="text-center py-10">
-              <h2 className="text-lg font-medium">
-                No Orders Found
-              </h2>
+              <h2 className="text-lg font-medium">No Orders Found</h2>
             </div>
           ) : (
             orders.map((order) => (
-              <div
-                key={order._id}
-                className="border border-gray-200"
-              >
-
+              <div key={order._id} className="border border-gray-200">
                 {/* Header */}
                 <div className="px-4 py-3 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 border-b border-gray-300">
                   <p className="bg-blue-500 px-3 py-1 text-white text-xs sm:text-sm w-fit">
@@ -83,10 +95,7 @@ export default function OrderPage() {
                   </p>
 
                   <span className="flex items-center gap-1 border border-gray-300 px-3 py-1 text-sm w-fit cursor-pointer hover:bg-gray-100">
-                    <FaLocationDot
-                      size={14}
-                      className="text-blue-500"
-                    />
+                    <FaLocationDot size={14} className="text-blue-500" />
                     Track
                   </span>
                 </div>
@@ -97,10 +106,8 @@ export default function OrderPage() {
                     key={index}
                     className="px-4 py-4 flex flex-col lg:flex-row gap-6 border-b border-gray-100 last:border-b-0"
                   >
-
                     {/* LEFT SIDE */}
                     <div className="flex flex-col sm:flex-row gap-4 flex-1">
-
                       <img
                         src={item.image}
                         alt={item.title}
@@ -109,9 +116,7 @@ export default function OrderPage() {
 
                       <div className="flex flex-col lg:flex-row lg:justify-between flex-1">
                         <div>
-                          <p className="font-medium">
-                            {item.title}
-                          </p>
+                          <p className="font-medium">{item.title}</p>
 
                           <p className="text-sm text-gray-500">
                             Quantity: {item.quantity}
@@ -119,13 +124,9 @@ export default function OrderPage() {
                         </div>
 
                         <div>
-                          <p className="font-semibold">
-                            ₹ {item.price}
-                          </p>
+                          <p className="font-semibold">₹ {item.price}</p>
 
-                          <p className="text-xs text-green-600">
-                            OFFERS: 1
-                          </p>
+                          <p className="text-xs text-green-600">OFFERS: 1</p>
                         </div>
                       </div>
                     </div>
@@ -133,7 +134,6 @@ export default function OrderPage() {
                     {/* RIGHT SIDE */}
                     {index === 0 && (
                       <div className="flex flex-col sm:flex-row justify-between lg:justify-between gap-4 lg:gap-10 flex-1">
-
                         <div>
                           <p className="text-sm">
                             Order Status <br />
@@ -145,23 +145,35 @@ export default function OrderPage() {
                           <p className="text-xs text-gray-500">
                             Payment: {order.paymentStatus}
                           </p>
+
+                          {order.orderStatus === "DELIVERED" && (
+                            <button
+                              onClick={() => {
+                                setSelectedProduct({
+                                  productId: item.product,
+                                  title: item.title,
+                                });
+
+                                setOpenReview(true);
+                              }}
+                              className="mt-3 bg-blue-600 text-white px-4 py-2 rounded text-sm hover:bg-blue-700"
+                            >
+                              Write Review
+                            </button>
+                          )}
                         </div>
 
                         {order.orderStatus !== "CANCELLED" &&
                           order.orderStatus !== "DELIVERED" && (
                             <button
-                              onClick={() =>
-                                handleCancel(order._id)
-                              }
+                              onClick={() => handleCancel(order._id)}
                               className="text-sm border border-gray-300 px-2 py-1 h-8 font-medium hover:underline w-fit"
                             >
                               Cancel ✕
                             </button>
                           )}
-
                       </div>
                     )}
-
                   </div>
                 ))}
 
@@ -169,12 +181,7 @@ export default function OrderPage() {
                 <div className="flex flex-col sm:flex-row sm:justify-between border-t border-t-gray-200 px-4 py-2">
                   <p className="text-sm text-gray-700">
                     Ordered On :
-                    <b>
-                      {" "}
-                      {new Date(
-                        order.createdAt
-                      ).toLocaleDateString()}
-                    </b>
+                    <b> {new Date(order.createdAt).toLocaleDateString()}</b>
                   </p>
 
                   <p className="text-sm text-gray-700">
@@ -187,13 +194,16 @@ export default function OrderPage() {
                     </b>
                   </p>
                 </div>
-
               </div>
             ))
           )}
-
         </div>
       </div>
+      <WriteReviewDialog
+        open={openReview}
+        onOpenChange={setOpenReview}
+        onSubmit={handleReviewSubmit}
+      />
     </div>
   );
 }

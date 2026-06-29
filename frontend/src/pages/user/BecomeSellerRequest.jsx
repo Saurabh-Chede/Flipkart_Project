@@ -38,7 +38,7 @@ export default function BecomeSellerRequest() {
 
   return (
     <div className="flex justify-center items-center min-h-[70vh] p-4">
-      <Card className="w-full max-w-xl">
+      <Card className="w-full max-w-xl rounded-none">
         <CardHeader>
           <CardTitle>Become a Seller</CardTitle>
           <CardDescription>
@@ -52,10 +52,11 @@ export default function BecomeSellerRequest() {
             placeholder="Tell us about your business..."
             value={message}
             onChange={(e) => setMessage(e.target.value)}
+            className='rounded-none'
           />
 
           <Button
-            className="w-full"
+            className="w-full rounded-none bg-blue-500 hover:bg-blue-600"
             onClick={handleRequest}
             disabled={loading}
           >

@@ -8,6 +8,7 @@ import { FaShoppingCart } from "react-icons/fa";
 import { IoMdFlash } from "react-icons/io";
 import { fetchCart } from "@/redux/cartSlice";
 import { useDispatch, useSelector } from "react-redux";
+import ReviewList from "./common/ReviewList";
 
 export default function ProductPage() {
   const { id } = useParams();
@@ -16,6 +17,8 @@ export default function ProductPage() {
   const [wishlisted, setWishlisted] = useState(false);
   const [cartLoading, setCartLoading] = useState(false);
   const [inCart, setInCart] = useState(false);
+  const [reviews, setReviews] = useState([]);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -103,6 +106,16 @@ export default function ProductPage() {
     }
   };
 
+  const fetchReviews = async () => {
+    try {
+      const res = await api.get(`/reviews/${product._id}`);
+
+      setReviews(res.data.reviews);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     const getProduct = async () => {
       try {
@@ -119,6 +132,12 @@ export default function ProductPage() {
     getProduct();
     fetchWishlistStatus();
   }, [id]);
+
+  useEffect(() => {
+    if (product?._id) {
+      fetchReviews();
+    }
+  }, [product]);
 
   if (loading) {
     return (
@@ -140,8 +159,7 @@ export default function ProductPage() {
   // const finalPrice = product.price - discount;
 
   const finalPrice =
-  product.price -
-  (product.price * product.discountPercentage) / 100;
+    product.price - (product.price * product.discountPercentage) / 100;
 
   return (
     <div className="bg-gray-100 pt-6 pb-10 min-h-screen">
@@ -206,12 +224,12 @@ export default function ProductPage() {
 
             <div className="flex items-center gap-2 mt-2">
               <span className="bg-green-600 text-white text-xs font-medium px-2 py-0.5 rounded flex items-center gap-1">
-                4.2
+                {product.ratings?.toFixed(1) || "0.0"}
                 <Star size={12} fill="white" />
               </span>
 
               <p className="text-gray-500 text-sm">
-                6,779 Ratings & 754 Reviews
+                {product.numReviews} Reviews
               </p>
             </div>
 
@@ -336,6 +354,13 @@ export default function ProductPage() {
                   <span className="font-medium">Product ID:</span> {product._id}
                 </p>
               </div>
+            </div>
+
+            {/* REVIEWS */}
+            <div className="border-t mt-8 pt-6">
+              <h2 className="text-xl font-semibold mb-5">Ratings & Reviews</h2>
+
+              <ReviewList reviews={reviews} />
             </div>
           </div>
         </div>

@@ -86,8 +86,7 @@ export default function Wishlist() {
   if (wishlist.length === 0) {
     return (
       <div className="min-h-[70vh] flex flex-col items-center justify-center px-4">
-        <Heart className="h-16 w-16 text-muted-foreground mb-4" />
-
+        <img src="https://static-assets-web.flixcart.com/fk-p-linchpin-web/fk-cp-zion/img/mywishlist-empty_39f7a5.png" alt="image" />
         <h2 className="text-2xl font-bold mb-2">
           Your Wishlist is Empty
         </h2>
@@ -97,7 +96,7 @@ export default function Wishlist() {
           Review them anytime and easily move them to cart.
         </p>
 
-        <Button onClick={goToHomePage}>
+        <Button onClick={goToHomePage} className='rounded-none bg-blue-500 py-1.5 hover:bg-blue-600'>
           Continue Shopping
         </Button>
       </div>
@@ -109,15 +108,13 @@ export default function Wishlist() {
       <div className="container mx-auto max-w-6xl px-4">
 
         <div className="flex items-center gap-3 mb-8">
-          <Heart className="h-7 w-7" />
-
           <div>
             <h1 className="text-3xl font-bold">
               My Wishlist
             </h1>
 
             <p className="text-muted-foreground">
-              {wishlist.length} item(s)
+              {wishlist.length} item
             </p>
           </div>
         </div>
@@ -126,7 +123,7 @@ export default function Wishlist() {
           {wishlist.map((item) => (
             <Card
               key={item._id}
-              className="overflow-hidden"
+              className="overflow-hidden rounded-none"
             >
               <CardContent className="p-0">
                 <div className="flex flex-col md:flex-row gap-6 p-6">
@@ -175,7 +172,7 @@ export default function Wishlist() {
 
                     <p className="text-sm text-muted-foreground mt-3">
                       {item.stock > 0
-                        ? `${item.stock} items available`
+                        ? `Stock : ${item.stock}`
                         : "Out of stock"}
                     </p>
 

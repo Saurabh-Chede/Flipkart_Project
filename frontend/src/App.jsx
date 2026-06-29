@@ -55,7 +55,6 @@ function App() {
 
     getLoggedInUser();
 
-    // 🔥 IMPORTANT FIX FOR CART BADGE
     dispatch(fetchCart());
   }, [dispatch]);
 
