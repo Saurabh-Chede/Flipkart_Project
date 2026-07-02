@@ -1,14 +1,16 @@
 import { useEffect, useState } from "react";
 import api from "@/config/axiosConfig";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { fetchCart } from "@/redux/cartSlice";
 
 export default function CheckoutPage() {
   const navigate = useNavigate();
+  const dispatch = useDispatch()
 
   const { items, totalPrice } = useSelector((state) => state.cart);
 
@@ -51,6 +53,8 @@ export default function CheckoutPage() {
       const res = await api.post("/order/place", {
         shippingAddressId: selectedAddress,
       });
+
+      dispatch(fetchCart())
 
       navigate(`/payment/${res.data.order._id}`);
     } catch (error) {
