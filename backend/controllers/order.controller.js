@@ -1,5 +1,5 @@
 import OrderModel from "../models/order.model.js";
-import SellerOrderModel from "../models/sellerOrder.model.js";
+import SellerOrderModel from "../models/sellerorder.model.js";
 import ProductModel from "../models/product.model.js";
 import CartModel from "../models/cart.model.js";
 import AddressModel from "../models/address.model.js";
