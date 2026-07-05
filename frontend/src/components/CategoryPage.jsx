@@ -212,7 +212,7 @@ export default function CategoryPage() {
                         <img
                           src={product.image}
                           alt={product.name}
-                          className={`max-h-full object-contain transition-transform duration-300 group-hover:scale-105 ${
+                          className={`max-h-full object-contain ${
                             product.stock <= 0 ? "opacity-50" : ""
                           }`}
                         />
