@@ -194,12 +194,6 @@ export const removeFromCart = async (req, res) => {
   }
 };
 
-export const applyCoupon = async (req, res) => {};
-
-export const placeOrder = async (req, res) => {};
-
-export const getUserOrders = async (req, res) => {};
-
 export const applyForSeller = async (req, res) => {
   try {
     const userId = req.userId;

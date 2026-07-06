@@ -174,3 +174,23 @@ export const deleteReview = async (req, res) => {
     });
   }
 };
+
+export const myReview = async (req, res) => {
+  try {
+    const reviews = await ReviewModel.find({
+      user: req.userId,
+    })
+      .populate("product", "name image")
+      .sort({ createdAt: -1 });
+
+    res.status(200).json({
+      success: true,
+      reviews,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
