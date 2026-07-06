@@ -19,7 +19,6 @@ import SingleSellerPage from "./pages/SingleSellerPage";
 import AdminLayout from "./pages/AdminLayout";
 import UsersPage from "./pages/UsersPage";
 import AllProductsPage from "./pages/AllProductsPage";
-import SingleUserOrders from "./pages/SingleUserOrders";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import api from "./config/axiosConfig";
@@ -34,6 +33,7 @@ import Addresses from "./components/Addresses";
 import CheckoutPage from "./components/CheckoutPage";
 import OrderSuccess from "./pages/user/OrderSuccess";
 import SellerOrderDetails from "./pages/seller/SellerOrderDetails";
+import AdminOrdersPage from "./pages/AdminOrdersPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -99,7 +99,7 @@ function App() {
           <Route path="/admin/dashboard" element={<AdminLayout />} />
           <Route path="admin/userspage" element={<UsersPage />} />
           <Route path="admin/allproductspage" element={<AllProductsPage />} />
-          <Route path="admin/singleuserorders" element={<SingleUserOrders />} />
+          <Route path="admin/orders" element={<AdminOrdersPage />} />
           <Route path="admin/singlesellerpage" element={<SingleSellerPage />} />
         </Route>
       </Route>

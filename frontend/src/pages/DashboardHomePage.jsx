@@ -12,13 +12,7 @@ import {
   CartesianGrid,
 } from "recharts";
 
-import {
-  Users,
-  Store,
-  ShoppingBag,
-  Package,
-  AlertCircle,
-} from "lucide-react";
+import { Users, Store, ShoppingBag, Package, AlertCircle } from "lucide-react";
 
 import { useState, useEffect } from "react";
 import api from "@/config/axiosConfig";
@@ -33,20 +27,30 @@ export default function DashboardHome() {
 
   const [recentOrders, setRecentOrders] = useState([]);
   const [lowStock, setLowStock] = useState([]);
-
+  const [orderStatus, setOrderStatus] = useState([]);
+  const [topProducts, setTopProducts] = useState([]);
+  const [salesData, setSalesData] = useState([]);
+  const [topCategories,setTopCategories] = useState([])
   useEffect(() => {
-  const fetchStats = async () => {
-    try {
-      const res = await api.get("/admin/dashboard-stats");
+    const fetchStats = async () => {
+      try {
+        const res = await api.get("/admin/dashboard-stats");
 
-      setDashboardStats(res.data.stats);
-    } catch (err) {
-      console.log("Dashboard stats error:", err.message);
-    }
-  };
+        setDashboardStats(res.data.stats);
+        setOrderStatus(res.data.orderStatus);
+        setTopProducts(res.data.topProducts);
+        setSalesData(res.data.monthlySales);
+        setRecentOrders(res.data.recentOrders);
+        setLowStock(res.data.lowStock)
+        setTopCategories(res.data.topCategories)
+        
+      } catch (err) {
+        console.log("Dashboard stats error:", err.message);
+      }
+    };
 
-  fetchStats();
-}, []);
+    fetchStats();
+  }, []);
 
   const stats = [
     {
@@ -75,37 +79,31 @@ export default function DashboardHome() {
     },
   ];
 
-  const orderStatus = [
-    { status: "Pending", count: 24, color: "bg-yellow-100 text-yellow-700" },
-    { status: "Processing", count: 15, color: "bg-blue-100 text-blue-700" },
-    { status: "Delivered", count: 89, color: "bg-green-100 text-green-700" },
-    { status: "Cancelled", count: 2, color: "bg-red-100 text-red-700" },
-  ];
-
-  const topProducts = [
-    { name: "Laptop", value: 40 },
-    { name: "Headphones", value: 25 },
-    { name: "Keyboard", value: 15 },
-    { name: "Mouse", value: 10 },
-    { name: "Monitor", value: 10 },
-  ];
+  const statusColors = {
+    Placed: "bg-yellow-100 text-yellow-700",
+    Confirmed: "bg-blue-100 text-blue-700",
+    Packed: "bg-indigo-100 text-indigo-700",
+    Shipped: "bg-cyan-100 text-cyan-700",
+    Delivered: "bg-green-100 text-green-700",
+    Cancelled: "bg-red-100 text-red-700",
+  };
 
   const COLORS = ["#4F46E5", "#10B981", "#F59E0B", "#EF4444", "#8B5CF6"];
 
-  const salesData = [
-    { month: "Jan", sales: 120 },
-    { month: "Feb", sales: 210 },
-    { month: "Mar", sales: 180 },
-    { month: "Apr", sales: 240 },
-    { month: "May", sales: 200 },
-    { month: "Jun", sales: 300 },
-  ];
+  // const salesData = [
+  //   { month: "Jan", sales: 120 },
+  //   { month: "Feb", sales: 210 },
+  //   { month: "Mar", sales: 180 },
+  //   { month: "Apr", sales: 240 },
+  //   { month: "May", sales: 200 },
+  //   { month: "Jun", sales: 300 },
+  // ];
 
-  const topCategories = [
-    { category: "Electronics", value: 150 },
-    { category: "Fashion", value: 120 },
-    { category: "Home Appliances", value: 90 },
-  ];
+  // const topCategories = [
+  //   { category: "Electronics", value: 150 },
+  //   { category: "Fashion", value: 120 },
+  //   { category: "Home Appliances", value: 90 },
+  // ];
 
   return (
     <div className="space-y-6 p-4 md:p-6 bg-gray-50">
@@ -120,9 +118,7 @@ export default function DashboardHome() {
             key={idx}
             className="bg-white rounded-xl shadow p-4 flex items-center gap-4 border border-gray-200"
           >
-            <div className={`p-3 rounded-lg ${stat.color}`}>
-              {stat.icon}
-            </div>
+            <div className={`p-3 rounded-lg ${stat.color}`}>{stat.icon}</div>
             <div>
               <p className="text-gray-500 text-sm">{stat.label}</p>
               <p className="font-semibold text-lg text-gray-800">
@@ -134,22 +130,18 @@ export default function DashboardHome() {
       </div>
 
       {/* ORDER STATUS */}
-      <div className="bg-white rounded-xl shadow p-4 md:p-6 border border-gray-200">
-        <h2 className="text-lg font-semibold text-gray-800 mb-4">
-          Orders Status
-        </h2>
-
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {orderStatus.map((item, idx) => (
-            <div
-              key={idx}
-              className={`p-4 rounded-lg flex flex-col items-center justify-center ${item.color}`}
-            >
-              <p className="text-sm font-medium">{item.status}</p>
-              <p className="text-xl font-bold mt-2">{item.count}</p>
-            </div>
-          ))}
-        </div>
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+        {orderStatus.map((item) => (
+          <div
+            key={item.status}
+            className={`p-4 rounded-lg flex flex-col items-center justify-center ${
+              statusColors[item.status]
+            }`}
+          >
+            <p className="text-sm font-medium">{item.status}</p>
+            <p className="text-xl font-bold mt-2">{item.count}</p>
+          </div>
+        ))}
       </div>
 
       {/* CHARTS */}
@@ -161,7 +153,13 @@ export default function DashboardHome() {
 
           <ResponsiveContainer width="100%" height={300}>
             <PieChart>
-              <Pie data={topProducts} dataKey="value" nameKey="name" outerRadius={80} label>
+              <Pie
+                data={topProducts}
+                dataKey="value"
+                nameKey="name"
+                outerRadius={80}
+                label
+              >
                 {topProducts.map((entry, index) => (
                   <Cell key={index} fill={COLORS[index % COLORS.length]} />
                 ))}
@@ -183,14 +181,19 @@ export default function DashboardHome() {
               <XAxis dataKey="month" />
               <YAxis />
               <Tooltip />
-              <Line type="monotone" dataKey="sales" stroke="#4F46E5" strokeWidth={2} />
+              <Line
+                type="monotone"
+                dataKey="sales"
+                stroke="#4F46E5"
+                strokeWidth={2}
+              />
             </LineChart>
           </ResponsiveContainer>
         </div>
       </div>
 
       {/* RECENT ORDERS */}
-      <div className="overflow-x-auto bg-white rounded-xl shadow border border-gray-200 p-4">
+      {/* <div className="overflow-x-auto bg-white rounded-xl shadow border border-gray-200 p-4">
         <h2 className="text-lg font-semibold text-gray-800 mb-4">
           Recent Orders
         </h2>
@@ -198,11 +201,16 @@ export default function DashboardHome() {
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>
-              {["Order ID", "Customer", "Product", "Status", "Payment"].map((head) => (
-                <th key={head} className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">
-                  {head}
-                </th>
-              ))}
+              {["Order ID", "Customer", "Product", "Status", "Payment"].map(
+                (head) => (
+                  <th
+                    key={head}
+                    className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase"
+                  >
+                    {head}
+                  </th>
+                ),
+              )}
             </tr>
           </thead>
 
@@ -221,6 +229,76 @@ export default function DashboardHome() {
                   <td className="px-4 py-2">{order.product}</td>
                   <td className="px-4 py-2">{order.status}</td>
                   <td className="px-4 py-2">{order.payment}</td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
+      </div> */}
+
+      <div className="overflow-x-auto bg-white rounded-xl shadow border border-gray-200 p-4">
+        <h2 className="text-lg font-semibold text-gray-800 mb-4">
+          Recent Orders
+        </h2>
+
+        <table className="min-w-full divide-y divide-gray-200">
+          <thead className="bg-gray-50">
+            <tr>
+              <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">
+                Order ID
+              </th>
+              <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">
+                Customer
+              </th>
+              <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">
+                Product
+              </th>
+              <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">
+                Status
+              </th>
+              <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">
+                Payment
+              </th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {recentOrders.length === 0 ? (
+              <tr>
+                <td colSpan={5} className="px-4 py-4 text-center text-gray-500">
+                  No recent orders
+                </td>
+              </tr>
+            ) : (
+              recentOrders.map((order) => (
+                <tr key={order._id} className="border-b last:border-b-0">
+                  <td className="px-4 py-3">{order.orderNumber}</td>
+
+                  <td className="px-4 py-3">{order.user?.name || "N/A"}</td>
+
+                  <td className="px-4 py-3">
+                    {order.items?.[0]?.title}
+                    {order.items.length > 1 &&
+                      ` +${order.items.length - 1} more`}
+                  </td>
+
+                  <td className="px-4 py-3">
+                    <span className="px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-700">
+                      {order.orderStatus}
+                    </span>
+                  </td>
+
+                  <td className="px-4 py-3">
+                    <span
+                      className={`px-2 py-1 rounded-full text-xs font-medium ${
+                        order.paymentStatus === "PAID"
+                          ? "bg-green-100 text-green-700"
+                          : "bg-yellow-100 text-yellow-700"
+                      }`}
+                    >
+                      {order.paymentStatus}
+                    </span>
+                  </td>
                 </tr>
               ))
             )}

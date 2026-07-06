@@ -105,7 +105,7 @@ export default function RoleDropdown() {
             </DropdownMenuItem>
 
             <DropdownMenuItem asChild>
-              <Link to="admin/singleuserorders">All Orders</Link>
+              <Link to="admin/orders">All Orders</Link>
             </DropdownMenuItem>
 
             <DropdownMenuItem asChild>

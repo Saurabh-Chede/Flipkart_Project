@@ -14,6 +14,8 @@ import DashboardHome from "./DashboardHomePage";
 import SellersPage from "./SellersTable";
 import UsersPage from "./UsersPage";
 import SellerRequestsPage from "./admin/SellerRequestsPage";
+import AllProductsPage from "./AllProductsPage";
+import AdminOrdersPage from "./AdminOrdersPage";
 
 export default function AdminLayout() {
   const [activePage, setActivePage] = useState("home");
@@ -25,7 +27,6 @@ export default function AdminLayout() {
     { id: "products", label: "Products", icon: <Box size={18} /> },
     { id: "orders", label: "Orders", icon: <ShoppingCart size={18} /> },
     { id: "requests", label: "requests", icon: <UserRoundCheck size={18} /> },
-
   ];
 
   const renderPage = () => {
@@ -36,7 +37,11 @@ export default function AdminLayout() {
         return <SellersPage />;
       case "users":
         return <UsersPage />;
-        case "requests":
+      case "products":
+        return <AllProductsPage/>;
+      case "orders":
+        return <AdminOrdersPage/>;
+      case "requests":
         return <SellerRequestsPage />;
       default:
         return <DashboardHome />;
@@ -45,7 +50,6 @@ export default function AdminLayout() {
 
   return (
     <div className="flex h-full">
-
       {/* ================= STICKY SIDEBAR ================= */}
       <aside className="hidden md:block w-64 bg-white border-r border-r-gray-300">
         <div className="sticky top-0 h-[calc(100vh-64px)] flex flex-col">
@@ -75,10 +79,7 @@ export default function AdminLayout() {
       </aside>
 
       {/* ================= SCROLLABLE MAIN CONTENT ================= */}
-      <main className="flex-1 p-6 overflow-y-auto">
-        {renderPage()}
-      </main>
-
+      <main className="flex-1 p-6 overflow-y-auto">{renderPage()}</main>
     </div>
   );
 }
