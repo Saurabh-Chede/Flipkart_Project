@@ -7,6 +7,8 @@ import {
   rejectSeller,
   getSellerRequests,
   getDashboardStats,
+  getAllProducts,
+  getAllOrders,
 } from "../controllers/admin.controller.js";
 import {
   verifyAndDecodeToken,
@@ -42,5 +44,7 @@ adminRouter.get(
 );
 
 adminRouter.get('/dashboard-stats',verifyAndDecodeToken,isAdmin,getDashboardStats)
+adminRouter.get('/products',verifyAndDecodeToken,isAdmin,getAllProducts)
+adminRouter.get('/orders',verifyAndDecodeToken,isAdmin,getAllOrders)
 
 export default adminRouter;

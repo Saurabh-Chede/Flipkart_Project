@@ -48,6 +48,11 @@ const ProductSchema = new Schema({
     default: 0,
   },
 
+  totalSold: {
+    type: Number,
+    default: 0,
+  },
+
   numReviews: {
     type: Number,
     default: 0,

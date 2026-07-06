@@ -6,7 +6,15 @@ import mongoose from "mongoose";
 
 export const addProduct = async (req, res) => {
   try {
-    const { name, price, description,discountPercentage, image, category, stock } = req.body;
+    const {
+      name,
+      price,
+      description,
+      discountPercentage,
+      image,
+      category,
+      stock,
+    } = req.body;
 
     if (
       !name ||
@@ -14,7 +22,7 @@ export const addProduct = async (req, res) => {
       !description ||
       !image ||
       !category ||
-      !discountPercentage||
+      !discountPercentage ||
       stock === undefined
     ) {
       return res.status(400).json({
@@ -250,7 +258,7 @@ export const getSellerDashboardStats = async (req, res) => {
         {
           $match: {
             seller: new mongoose.Types.ObjectId(sellerId),
-            payoutStatus: "PAID", 
+            payoutStatus: "PAID",
           },
         },
         {
@@ -399,18 +407,14 @@ export const getSellerOrders = async (req, res) => {
   }
 };
 
-export const updateSellerOrderStatus = async (
-  req,
-  res
-) => {
+export const updateSellerOrderStatus = async (req, res) => {
   try {
     const { status } = req.body;
 
-    const sellerOrder =
-      await SellerOrderModel.findOne({
-        _id: req.params.id,
-        seller: req.userId,
-      });
+    const sellerOrder = await SellerOrderModel.findOne({
+      _id: req.params.id,
+      seller: req.userId,
+    });
 
     if (!sellerOrder) {
       return res.status(404).json({
@@ -419,6 +423,7 @@ export const updateSellerOrderStatus = async (
       });
     }
 
+    const previousStatus = sellerOrder.status;
     sellerOrder.status = status;
 
     if (status === "DELIVERED") {
@@ -428,13 +433,20 @@ export const updateSellerOrderStatus = async (
 
     await sellerOrder.save();
 
-    // User Order sync
-    await OrderModel.findByIdAndUpdate(
-      sellerOrder.order,
-      {
-        orderStatus: status,
+    if (previousStatus !== "DELIVERED" && status === "DELIVERED") {
+      for (const item of sellerOrder.items) {
+        await ProductModel.findByIdAndUpdate(item.product, {
+          $inc: {
+            totalSold: item.quantity,
+          },
+        });
       }
-    );
+    }
+
+    // User Order sync
+    await OrderModel.findByIdAndUpdate(sellerOrder.order, {
+      orderStatus: status,
+    });
 
     res.json({
       success: true,
@@ -448,19 +460,15 @@ export const updateSellerOrderStatus = async (
   }
 };
 
-export const getSellerOrderById = async (
-  req,
-  res
-) => {
+export const getSellerOrderById = async (req, res) => {
   try {
-    const order =
-      await SellerOrderModel.findOne({
-        _id: req.params.id,
-        seller: req.userId,
-      })
-        .populate("user", "name email")
-        .populate("order")
-        .populate("items.product");
+    const order = await SellerOrderModel.findOne({
+      _id: req.params.id,
+      seller: req.userId,
+    })
+      .populate("user", "name email")
+      .populate("order")
+      .populate("items.product");
 
     if (!order) {
       return res.status(404).json({
@@ -480,5 +488,3 @@ export const getSellerOrderById = async (
     });
   }
 };
-
-
