@@ -34,6 +34,8 @@ import CheckoutPage from "./components/CheckoutPage";
 import OrderSuccess from "./pages/user/OrderSuccess";
 import SellerOrderDetails from "./pages/seller/SellerOrderDetails";
 import AdminOrdersPage from "./pages/AdminOrdersPage";
+import MyReviews from "./pages/user/MyReviewPage";
+import NotFound from "./components/common/NotFound";
 
 function App() {
   const dispatch = useDispatch();
@@ -82,6 +84,8 @@ function App() {
             <Route path="orders" element={<OrderPage />} />
             <Route path="wishlist" element={<Wishlist />} />
             <Route path="addresses" element={<Addresses />} />
+            <Route path="reviews" element={<MyReviews />}></Route>
+            <Route path="*" element={<NotFound />} />
           </Route>
         </Route>
 
@@ -102,6 +106,9 @@ function App() {
           <Route path="admin/orders" element={<AdminOrdersPage />} />
           <Route path="admin/singlesellerpage" element={<SingleSellerPage />} />
         </Route>
+
+        {/* 404 - Always Last */}
+        <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
   );

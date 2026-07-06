@@ -97,19 +97,19 @@ export default function Sidebar() {
 
         <div className="border-b border-b-gray-300">
 
-          <NavLink to="/account/coupons">
+          <NavLink to="/myprofile/coupons">
             <div className="px-12 py-3 hover:bg-gray-200 text-sm">
               My Coupons
             </div>
           </NavLink>
 
-          <NavLink to="/account/reviews">
+          <NavLink to="/myprofile/reviews">
             <div className="px-12 py-3 hover:bg-gray-200 text-sm">
               My Reviews & Ratings
             </div>
           </NavLink>
 
-          <NavLink to="/account/notifications">
+          <NavLink to="/myprofile/notifications">
             <div className="px-12 py-3 hover:bg-gray-200 text-sm">
               All Notifications
             </div>

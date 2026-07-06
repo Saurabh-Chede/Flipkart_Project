@@ -1,34 +1,25 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import api from "@/config/axiosConfig";
-import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 
-export default function Topdeals() {
+export default function TopDeals() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const getTopDeals = async () => {
-    try {
-      setLoading(true);
-
-      const { data } = await api.get("/product/get-products");
-      console.log(data.products);
-
-      // Agar response { success:true, products:[...] } hai
-      setProducts(data.products);
-
-      // Agar direct array aa raha hai to:
-      // setProducts(data);
-    } catch (error) {
-      console.error("Error fetching products:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
-    getTopDeals();
+    const fetchTopDeals = async () => {
+      try {
+        const { data } = await api.get("/product/top-deals");
+        setProducts(data.products || []);
+      } catch (error) {
+        console.error("Error fetching top deals:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTopDeals();
   }, []);
 
   return (
@@ -37,22 +28,17 @@ export default function Topdeals() {
         <div className="bg-white rounded-md shadow-sm p-4">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-xl font-semibold">Top Deals</h2>
-
-            <Button variant="outline" size="sm">
-              View All
-            </Button>
           </div>
 
           {loading ? (
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-              {Array(6)
-                .fill(0)
-                .map((_, i) => (
-                  <div key={i} className="space-y-2 text-center">
-                    <Skeleton className="h-28 w-full rounded-lg" />
-                    <Skeleton className="h-4 w-16 mx-auto" />
-                  </div>
-                ))}
+              {Array.from({ length: 6 }).map((_, i) => (
+                <div key={i} className="space-y-2 text-center">
+                  <Skeleton className="h-40 w-full rounded-lg" />
+                  <Skeleton className="h-4 w-24 mx-auto" />
+                  <Skeleton className="h-4 w-16 mx-auto" />
+                </div>
+              ))}
             </div>
           ) : (
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
@@ -77,6 +63,10 @@ export default function Topdeals() {
                   <p className="text-green-600 font-semibold">
                     ₹{product.price}
                   </p>
+
+                  <span className="text-xs text-red-500 font-medium">
+                    {product.discountPercentage}% OFF
+                  </span>
                 </Link>
               ))}
             </div>

@@ -18,7 +18,7 @@ export default function ProfilePage() {
               </p>
             </div>
 
-            <div className="bg-white flex-1 rounded-md">
+            <div className="bg-white rounded-md">
               <Sidebar />
             </div>
           </div>
