@@ -3,6 +3,7 @@ import SellerOrderModel from "../models/sellerorder.model.js";
 import ProductModel from "../models/product.model.js";
 import CartModel from "../models/cart.model.js";
 import AddressModel from "../models/address.model.js";
+import { calculateDiscountedPrice } from "../utils/priceUtils.js";
 
 const generateOrderNumber = () => {
   return `ORD-${Date.now()}`;
@@ -42,8 +43,10 @@ export const placeOrder = async (req, res) => {
     const orderItems = cart.items.map((item) => {
       const discountPercentage = item.product.discountPercentage || 0;
 
-      const finalPrice =
-        item.product.price - (item.product.price * discountPercentage) / 100;
+      const finalPrice = calculateDiscountedPrice(
+        item.product.price,
+        discountPercentage,
+      );
 
       const total = finalPrice * item.quantity;
 
