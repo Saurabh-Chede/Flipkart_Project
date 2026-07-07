@@ -9,6 +9,7 @@ import { IoMdFlash } from "react-icons/io";
 import { fetchCart } from "@/redux/cartSlice";
 import { useDispatch, useSelector } from "react-redux";
 import ReviewList from "./common/ReviewList";
+import { calculateDiscountedPrice } from "@/utils/priceUtils";
 
 export default function ProductPage() {
   const { id } = useParams();
@@ -155,11 +156,10 @@ export default function ProductPage() {
     );
   }
 
-  // const discount = Math.floor(product.price * 0.25);
-  // const finalPrice = product.price - discount;
-
-  const finalPrice =
-    product.price - (product.price * product.discountPercentage) / 100;
+  const finalPrice = calculateDiscountedPrice(
+    product.price,
+    product.discountPercentage,
+  );
 
   return (
     <div className="bg-gray-100 pt-6 pb-10 min-h-screen">

@@ -7,10 +7,11 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { fetchCart } from "@/redux/cartSlice";
+import { calculateDiscountedPrice } from "@/utils/priceUtils";
 
 export default function CheckoutPage() {
   const navigate = useNavigate();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const { items, totalPrice } = useSelector((state) => state.cart);
 
@@ -54,16 +55,13 @@ export default function CheckoutPage() {
         shippingAddressId: selectedAddress,
       });
 
-      dispatch(fetchCart())
+      dispatch(fetchCart());
 
       navigate(`/payment/${res.data.order._id}`);
     } catch (error) {
       console.log(error);
 
-      alert(
-        error?.response?.data?.message ||
-          "Failed to place order"
-      );
+      alert(error?.response?.data?.message || "Failed to place order");
     } finally {
       setLoading(false);
     }
@@ -82,9 +80,7 @@ export default function CheckoutPage() {
 
             <CardContent className="space-y-3">
               {addresses.length === 0 ? (
-                <div className="text-muted-foreground">
-                  No address found.
-                </div>
+                <div className="text-muted-foreground">No address found.</div>
               ) : (
                 addresses.map((address) => (
                   <label
@@ -98,28 +94,21 @@ export default function CheckoutPage() {
                     <input
                       type="radio"
                       checked={selectedAddress === address._id}
-                      onChange={() =>
-                        setSelectedAddress(address._id)
-                      }
+                      onChange={() => setSelectedAddress(address._id)}
                     />
 
                     <div>
-                      <h3 className="font-medium">
-                        {address.fullName}
-                      </h3>
+                      <h3 className="font-medium">{address.fullName}</h3>
 
                       <p className="text-sm text-muted-foreground">
                         {address.addressLine1}
                       </p>
 
                       <p className="text-sm text-muted-foreground">
-                        {address.city}, {address.state} -{" "}
-                        {address.pincode}
+                        {address.city}, {address.state} - {address.pincode}
                       </p>
 
-                      <p className="text-sm">
-                        {address.phone}
-                      </p>
+                      <p className="text-sm">{address.phone}</p>
                     </div>
                   </label>
                 ))
@@ -135,17 +124,13 @@ export default function CheckoutPage() {
 
             <CardContent className="space-y-4">
               {items.map((item) => {
-                const finalPrice =
-                  item.product?.price -
-                  (item.product?.price *
-                    (item.product?.discountPercentage || 0)) /
-                    100;
+                const finalPrice = calculateDiscountedPrice(
+                  item.product?.price,
+                  item.product?.discountPercentage,
+                );
 
                 return (
-                  <div
-                    key={item._id}
-                    className="flex gap-4 border-b pb-4"
-                  >
+                  <div key={item._id} className="flex gap-4 border-b pb-4">
                     <img
                       src={item.product?.image}
                       alt={item.product?.name}
@@ -153,36 +138,27 @@ export default function CheckoutPage() {
                     />
 
                     <div className="flex-1">
-                      <h3 className="font-medium">
-                        {item.product?.name}
-                      </h3>
+                      <h3 className="font-medium">{item.product?.name}</h3>
 
                       <div className="flex items-center gap-2 mt-1">
                         <span className="font-semibold text-lg">
                           ₹{finalPrice}
                         </span>
 
-                        {(item.product?.discountPercentage || 0) >
-                          0 && (
+                        {(item.product?.discountPercentage || 0) > 0 && (
                           <>
                             <span className="line-through text-sm text-gray-500">
                               ₹{item.product?.price}
                             </span>
 
                             <span className="text-green-600 text-sm">
-                              {
-                                item.product
-                                  ?.discountPercentage
-                              }
-                              % OFF
+                              {item.product?.discountPercentage}% OFF
                             </span>
                           </>
                         )}
                       </div>
 
-                      <p className="text-sm mt-1">
-                        Quantity : {item.quantity}
-                      </p>
+                      <p className="text-sm mt-1">Quantity : {item.quantity}</p>
 
                       <p className="font-semibold mt-1">
                         ₹{finalPrice * item.quantity}
@@ -212,9 +188,7 @@ export default function CheckoutPage() {
                 <span>Delivery Charge</span>
 
                 {deliveryCharge === 0 ? (
-                  <span className="text-green-600">
-                    FREE
-                  </span>
+                  <span className="text-green-600">FREE</span>
                 ) : (
                   <span>₹{deliveryCharge}</span>
                 )}
@@ -230,15 +204,9 @@ export default function CheckoutPage() {
               <Button
                 className="w-full mt-4"
                 onClick={handlePlaceOrder}
-                disabled={
-                  loading ||
-                  items.length === 0 ||
-                  !selectedAddress
-                }
+                disabled={loading || items.length === 0 || !selectedAddress}
               >
-                {loading
-                  ? "Placing Order..."
-                  : "PLACE ORDER"}
+                {loading ? "Placing Order..." : "PLACE ORDER"}
               </Button>
             </CardContent>
           </Card>

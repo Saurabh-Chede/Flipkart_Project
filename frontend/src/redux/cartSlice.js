@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import api from "@/config/axiosConfig";
+import { calculateDiscountedPrice } from "@/utils/priceUtils";
 
 const initialState = {
   items: [],
@@ -13,15 +14,14 @@ const initialState = {
 const calculateTotals = (state) => {
   state.totalQuantity = state.items.reduce(
     (sum, item) => sum + item.quantity,
-    0
+    0,
   );
 
   state.totalPrice = state.items.reduce((sum, item) => {
     const price = item.product?.price || 0;
     const discount = item.product?.discountPercentage || 0;
 
-    const finalPrice =
-      price - (price * discount) / 100;
+    const finalPrice = calculateDiscountedPrice(price, discount);
 
     return sum + finalPrice * item.quantity;
   }, 0);
@@ -37,7 +37,7 @@ export const fetchCart = createAsyncThunk(
     } catch (err) {
       return rejectWithValue(err.response?.data || "Error fetching cart");
     }
-  }
+  },
 );
 
 const cartSlice = createSlice({
@@ -65,17 +65,13 @@ const cartSlice = createSlice({
     },
 
     removeFromCart(state, action) {
-      state.items = state.items.filter(
-        (i) => i._id !== action.payload
-      );
+      state.items = state.items.filter((i) => i._id !== action.payload);
 
       calculateTotals(state);
     },
 
     increaseQty(state, action) {
-      const item = state.items.find(
-        (i) => i._id === action.payload
-      );
+      const item = state.items.find((i) => i._id === action.payload);
 
       if (item) {
         item.quantity += 1;
@@ -84,18 +80,14 @@ const cartSlice = createSlice({
     },
 
     decreaseQty(state, action) {
-      const item = state.items.find(
-        (i) => i._id === action.payload
-      );
+      const item = state.items.find((i) => i._id === action.payload);
 
       if (!item) return;
 
       if (item.quantity > 1) {
         item.quantity -= 1;
       } else {
-        state.items = state.items.filter(
-          (i) => i._id !== action.payload
-        );
+        state.items = state.items.filter((i) => i._id !== action.payload);
       }
 
       calculateTotals(state);

@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { calculateDiscountedPrice } from "@/utils/priceUtils";
 
 import {
   increaseQty,
@@ -77,11 +78,10 @@ export default function Cart() {
             </Card>
           ) : (
             items.map((item) => {
-              const finalPrice =
-                item.product?.price -
-                (item.product?.price *
-                  (item.product?.discountPercentage || 0)) /
-                  100;
+              const finalPrice = calculateDiscountedPrice(
+                item.product?.price,
+                item.product?.discountPercentage,
+              );
 
               return (
                 <Card key={item._id}>
@@ -98,9 +98,7 @@ export default function Cart() {
                       </h2>
 
                       <div>
-                        <p className="text-lg font-bold">
-                          ₹{finalPrice}
-                        </p>
+                        <p className="text-lg font-bold">₹{finalPrice}</p>
 
                         {(item.product?.discountPercentage || 0) > 0 && (
                           <>
@@ -123,9 +121,7 @@ export default function Cart() {
                           -
                         </Button>
 
-                        <span className="font-medium">
-                          {item.quantity}
-                        </span>
+                        <span className="font-medium">{item.quantity}</span>
 
                         <Button
                           size="sm"
@@ -157,22 +153,16 @@ export default function Cart() {
 
           <CardContent className="space-y-3">
             {items.map((item) => {
-              const finalPrice =
-                item.product?.price -
-                (item.product?.price *
-                  (item.product?.discountPercentage || 0)) /
-                  100;
+              const finalPrice = calculateDiscountedPrice(
+                item.product?.price,
+                item.product?.discountPercentage,
+              );
 
               return (
-                <div
-                  key={item._id}
-                  className="flex justify-between text-sm"
-                >
+                <div key={item._id} className="flex justify-between text-sm">
                   <span>{item.product?.name}</span>
 
-                  <span>
-                    ₹{finalPrice * item.quantity}
-                  </span>
+                  <span>₹{finalPrice * item.quantity}</span>
                 </div>
               );
             })}
@@ -186,10 +176,7 @@ export default function Cart() {
               <span>₹{totalPrice}</span>
             </div>
 
-            <Button
-              onClick={handlebuy}
-              className="w-full mt-4"
-            >
+            <Button onClick={handlebuy} className="w-full mt-4">
               Buy Now
             </Button>
           </CardContent>

@@ -1,6 +1,7 @@
 import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import api from "@/config/axiosConfig";
+import { calculateDiscountedPrice } from "@/utils/priceUtils";
 
 export default function CategoryPage() {
   const { category } = useParams();
@@ -191,10 +192,10 @@ export default function CategoryPage() {
               </div> */}
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-2">
                 {filteredProducts.map((product) => {
-                  const finalPrice =
-                    product.price -
-                    (product.price * (product.discountPercentage || 0)) / 100;
-
+                  const finalPrice = calculateDiscountedPrice(
+                    product.price,
+                    product.discountPercentage,
+                  );
                   return (
                     <Link
                       to={`/product/${product._id}`}
