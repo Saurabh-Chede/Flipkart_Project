@@ -149,6 +149,8 @@ const AddProductPage = () => {
               <option value="clothing">Clothing</option>
               <option value="furniture">Furniture</option>
               <option value="grocerry">Grocerry</option>
+              <option value="food">Food</option>
+              <option value="fashion">Fashion</option>
             </select>
           </div>
 
