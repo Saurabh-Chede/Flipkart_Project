@@ -29,7 +29,7 @@ const ProductSchema = new Schema({
   category: {
     type: String,
     required: true,
-    enum: ["clothing", "footwear", "electronics", "grocerry", "furniture"],
+    enum: ["clothing", "footwear", "electronics", "grocerry", "furniture","food","fashion"],
   },
 
   stock: {
