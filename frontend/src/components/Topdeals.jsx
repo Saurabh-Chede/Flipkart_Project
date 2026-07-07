@@ -23,7 +23,7 @@ export default function TopDeals() {
   }, []);
 
   return (
-    <section className="bg-gray-100 py-4">
+    <section className="bg-gray-100">
       <div className="max-w-7xl mx-auto px-4">
         <div className="bg-white rounded-md shadow-sm p-4">
           <div className="flex items-center justify-between mb-4">

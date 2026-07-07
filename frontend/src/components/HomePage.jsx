@@ -15,36 +15,8 @@ export default function HomePage() {
   }, []);
 
   return (
-    <div className="flex flex-col px-4.5 bg-gray-100">
-      {/* <div
-        className="
-         grid grid-cols-3 text-center bg-white mt-2.5 rounded-md mx-4 py-4 md:grid-cols-4 lg:grid-cols-7 md:mx-9 gap-1
-        "
-      >
-        {category.map((product) => (
-          <Link
-            key={product.id}
-            to={`/category/${product.id}`}
-            className="flex flex-col items-center text-xs hover:text-blue-600 transition
-            "
-          >
-            <img
-              src={product.image}
-              alt={product.title}
-              className="w-16 h-16 object-contain"
-            />
-            <div className="flex mt-2 gap-1 items-center">
-              <p className=" text-xs lg:text-sm font-normal">{product.title}</p>
-              {product.hasSub && (
-                <span className="hidden md:inline-block">
-                  <ChevronDown size={15} />
-                </span>
-              )}
-            </div>
-          </Link>
-        ))}
-      </div> */}
-      <div className="bg-white mt-2.5 rounded-md shadow-sm mx-4 md:mx-9 py-4">
+    <div className="flex flex-col px-0 md:px-4.5 bg-gray-100">
+      <div className="bg-white mt-2.5 rounded-xs shadow-sm mx-4 md:mx-9 py-4">
         <div className="flex justify-between gap-4 overflow-x-auto px-4 scrollbar-hide">
           {category.map((product) => (
             <Link
@@ -72,10 +44,10 @@ export default function HomePage() {
           ))}
         </div>
       </div>
-      <Banner></Banner>
+      <Banner/>
       <Topdeals />
       <Clothes />
-      <Kidstoys></Kidstoys>
+      <Kidstoys/>
     </div>
   );
 }
