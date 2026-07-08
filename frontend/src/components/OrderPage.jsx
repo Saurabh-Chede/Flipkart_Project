@@ -3,6 +3,7 @@ import api from "@/config/axiosConfig";
 import { FaChevronRight } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
 import WriteReviewDialog from "./common/WriteReviewDialog";
+import toast from "react-hot-toast";
 
 export default function OrderPage() {
   const [orders, setOrders] = useState([]);
@@ -56,6 +57,7 @@ export default function OrderPage() {
       alert("Review Added Successfully");
     } catch (error) {
       console.log(error);
+      toast.error(error.response?.data?.message || "Failed to add review");
     }
   };
 
