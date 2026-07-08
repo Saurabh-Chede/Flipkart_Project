@@ -77,7 +77,44 @@ export const getSellerProducts = async (req, res) => {
   }
 };
 
-export const deleteSellerProduct = async (req, res) => {};
+export const deleteSellerProduct = async (req, res) => {
+  try {
+    const userId = req.userId; // JWT middleware se aa raha hai
+    const { productId } = req.params;
+
+    const product = await ProductModel.findById(productId);
+
+    if (!product) {
+      return res.status(404).json({
+        success: false,
+        message: "Product not found",
+      });
+    }
+
+    // Check product ownership
+    if (product.seller.toString() !== userId.toString()) {
+      return res.status(403).json({
+        success: false,
+        message: "You are not allowed to delete this product",
+      });
+    }
+
+    await ProductModel.findByIdAndDelete(productId);
+
+    return res.status(200).json({
+      success: true,
+      message: "Product deleted successfully",
+    });
+
+  } catch (error) {
+    console.log("Delete Seller Product Error:", error);
+
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error",
+    });
+  }
+};
 
 export const updateSellerProduct = async (req, res) => {};
 
