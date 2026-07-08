@@ -116,7 +116,7 @@ export default function Navbar() {
             {showSidebar && <Sidebar onClose={() => setShowSidebar(false)} />}
 
             <Link to="/">
-              <img src={Logo} alt="logo" className="h-8 md:h-10" />
+              <img src={Logo} alt="logo" className="h-8 md:h-10 -ml-6 lg:-ml-8" />
             </Link>
 
             {/* SEARCH */}

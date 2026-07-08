@@ -53,45 +53,134 @@ const ViewProducts = () => {
 
   return (
     <div className="min-h-screen bg-gray-100 p-4 lg:p-8">
-      <h1 className="text-xl text-gray-600 font-bold mb-6">My Products</h1>
+      <div className="max-w-7xl mx-auto">
+        <div className="flex items-center justify-between mb-6">
+          <h1 className="text-2xl font-bold text-gray-700">My Products</h1>
 
-      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {sellerProduct.map((product) => (
-          <div
-            key={product._id}
-            className="bg-white rounded-xl shadow-sm hover:shadow-md transition p-4"
-          >
-            <img
-              src={product.image}
-              alt={product.name}
-              className="w-full h-44 object-contain rounded-lg"
-            />
+          <span className="text-sm text-gray-500">
+            Total: {sellerProduct.length}
+          </span>
+        </div>
 
-            <h3 className="mt-3 font-semibold text-lg">{product.name}</h3>
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {sellerProduct.map((product) => (
+            <div
+              key={product._id}
+              className="
+              bg-white rounded-lg overflow-hidden
+              shadow-sm hover:shadow-xl
+              transition-all duration-300
+              border border-gray-200
+            "
+            >
+              {/* Image Section */}
+              <div className="relative bg-gray-50 h-52 flex items-center justify-center">
+                <img
+                  src={product.image}
+                  alt={product.name}
+                  className="
+                  h-full w-full object-contain
+                  p-4
+                "
+                />
 
-            <p className="text-green-600 font-bold mt-1">₹{product.price}</p>
+                {product.stock === 0 && (
+                  <span
+                    className="
+                    absolute top-3 right-3
+                    bg-red-500 text-white
+                    text-xs px-3 py-1
+                    rounded-full
+                  "
+                  >
+                    Out of Stock
+                  </span>
+                )}
+              </div>
 
-            <p className="text-sm text-gray-500 mt-1">Stock: {product.stock}</p>
+              {/* Content */}
+              <div className="p-4">
+                <h3
+                  className="
+                  font-semibold text-gray-800
+                  truncate text-lg
+                "
+                >
+                  {product.name}
+                </h3>
 
-            <div className="flex justify-between mt-4">
-              <button className="bg-yellow-500 text-white px-3 py-1 rounded-md text-sm">
-                Edit
-              </button>
+                <div className="flex items-center justify-between mt-3">
+                  <p className="text-blue-600 font-bold text-lg">
+                    ₹{product.price}
+                  </p>
 
-              <button
-                onClick={() => handleDelete(product._id)}
-                className="bg-red-500 text-white px-3 py-1 rounded-md text-sm"
-              >
-                Delete
-              </button>
+                  <span
+                    className="
+                    text-xs bg-green-100
+                    text-green-700
+                    px-2 py-1 rounded-full
+                  "
+                  >
+                    Stock: {product.stock}
+                  </span>
+                </div>
+
+                <div className="flex gap-3 mt-5">
+                  <button
+                    onClick={() =>
+                      navigate(`/seller/editproduct/${product._id}`)
+                    }
+                    className="
+                    flex-1
+                    bg-yellow-400
+                    hover:bg-yellow-500
+                    text-white
+                    py-2
+                    rounded-md
+                    text-sm
+                    font-medium
+                    transition
+                  "
+                  >
+                    Edit
+                  </button>
+
+                  <button
+                    onClick={() => handleDelete(product._id)}
+                    className="
+                    flex-1
+                    bg-red-500
+                    hover:bg-red-600
+                    text-white
+                    py-2
+                    rounded-md
+                    text-sm
+                    font-medium
+                    transition
+                  "
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
 
-      {sellerProduct.length === 0 && (
-        <p className="text-center text-gray-500 mt-10">No products found</p>
-      )}
+        {sellerProduct.length === 0 && (
+          <div
+            className="
+            bg-white rounded-lg
+            shadow-sm
+            p-10
+            text-center
+            text-gray-500
+          "
+          >
+            No products found
+          </div>
+        )}
+      </div>
     </div>
   );
 };

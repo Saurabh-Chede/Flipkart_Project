@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import api from "../config/axiosConfig";
 import { login } from "../redux/authSlice";
 import toast from "react-hot-toast";
+import { X } from "lucide-react";
 
 function Login() {
   const navigate = useNavigate();
@@ -35,7 +36,7 @@ function Login() {
         console.log(response.data.message);
 
         dispatch(login(response.data.user));
-        toast.success('login successful')
+        toast.success("login successful");
 
         setFormData({
           email: "",
@@ -57,7 +58,14 @@ function Login() {
 
   return (
     <div className="min-h-screen bg-black/50 flex justify-center items-center px-4">
-      <div className="bg-white w-full max-w-4xl md:h-[530px] flex flex-col md:flex-row rounded-sm overflow-hidden shadow-lg">
+      <div className="relative bg-white w-full max-w-4xl md:h-[530px] flex flex-col md:flex-row rounded-sm overflow-hidden shadow-lg">
+        <button
+          type="button"
+          onClick={() => navigate(-1)}
+          className="absolute top-3 right-3 z-10 p-2 rounded-full hover:bg-gray-100 transition"
+        >
+          <X size={24} className="text-gray-600" />
+        </button>
         {/* Left Section */}
         <div className="bg-[#2874f0] text-white md:w-[40%] p-10 flex flex-col justify-between">
           <div>

@@ -25,6 +25,7 @@ export default function ProductPage() {
   const dispatch = useDispatch();
 
   const cartItems = useSelector((state) => state.cart.items);
+  const user = useSelector((state) => state.auth.user);
 
   useEffect(() => {
     if (!product?._id) return;
@@ -35,6 +36,11 @@ export default function ProductPage() {
   }, [cartItems, product]);
 
   const handleAddToCart = async () => {
+    if (!user) {
+      toast.error("Please login first");
+      navigate("/login");
+      return;
+    }
     try {
       setCartLoading(true);
 
