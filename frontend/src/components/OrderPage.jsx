@@ -54,7 +54,7 @@ export default function OrderPage() {
       setOpenReview(false);
       setSelectedProduct(null);
 
-      alert("Review Added Successfully");
+      toast.success("Review Added Successfully");
     } catch (error) {
       console.log(error);
       toast.error(error.response?.data?.message || "Failed to add review");
