@@ -61,7 +61,7 @@ function Login() {
       <div className="relative bg-white w-full max-w-4xl md:h-[530px] flex flex-col md:flex-row rounded-sm overflow-hidden shadow-lg">
         <button
           type="button"
-          onClick={() => navigate(-1)}
+          onClick={() => navigate('/')}
           className="absolute top-3 right-3 z-10 p-2 rounded-full hover:bg-gray-100 transition"
         >
           <X size={24} className="text-gray-600" />
