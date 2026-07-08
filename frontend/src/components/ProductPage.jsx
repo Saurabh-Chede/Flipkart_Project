@@ -10,6 +10,7 @@ import { fetchCart } from "@/redux/cartSlice";
 import { useDispatch, useSelector } from "react-redux";
 import ReviewList from "./common/ReviewList";
 import { calculateDiscountedPrice } from "@/utils/priceUtils";
+import toast from "react-hot-toast";
 
 export default function ProductPage() {
   const { id } = useParams();
@@ -51,8 +52,12 @@ export default function ProductPage() {
       await dispatch(fetchCart());
 
       setInCart(true);
+      toast.success("Product added to cart");
     } catch (error) {
       console.log(error);
+      toast.error(
+        error.response?.data?.message || "Failed to add product to cart",
+      );
     } finally {
       setCartLoading(false);
     }

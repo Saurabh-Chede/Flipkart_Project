@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import api from "../config/axiosConfig";
 import { login } from "../redux/authSlice";
+import toast from "react-hot-toast";
 
 function Login() {
   const navigate = useNavigate();
@@ -34,6 +35,7 @@ function Login() {
         console.log(response.data.message);
 
         dispatch(login(response.data.user));
+        toast.success('login successful')
 
         setFormData({
           email: "",

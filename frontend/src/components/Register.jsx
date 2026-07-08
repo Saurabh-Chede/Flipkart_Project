@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../config/axiosConfig";
+import toast from "react-hot-toast";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -29,7 +30,7 @@ export default function Register() {
       const response = await api.post("/auth/register", formData);
 
       if (response?.data?.success) {
-        alert(response.data.message);
+        toast.success(response.data.message);
 
         setFormData({
           name: "",

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "@/config/axiosConfig";
+import toast from "react-hot-toast";
 
 const AddProductPage = () => {
   const navigate = useNavigate();
@@ -38,7 +39,7 @@ const AddProductPage = () => {
       const response = await api.post("/seller/add-product", product);
 
       if (response?.data?.success) {
-        alert(response.data.message);
+        toast.success(response.data.message);
 
         setProduct({
           name: "",
@@ -52,7 +53,9 @@ const AddProductPage = () => {
 
         navigate("/seller/viewproducts");
       }
-    } catch (error) {}
+    } catch (error) {
+      toast.error(response.data.error)
+    }
   };
 
   return (

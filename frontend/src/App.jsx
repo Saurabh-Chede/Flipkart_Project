@@ -36,6 +36,7 @@ import SellerOrderDetails from "./pages/seller/SellerOrderDetails";
 import AdminOrdersPage from "./pages/AdminOrdersPage";
 import MyReviews from "./pages/user/MyReviewPage";
 import NotFound from "./components/common/NotFound";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   const dispatch = useDispatch();
@@ -61,56 +62,77 @@ function App() {
   }, [dispatch]);
 
   return (
-    <Routes>
-      <Route element={<Layout />}>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/product/:id" element={<ProductPage />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/category/:category" element={<CategoryPage />} />
+    <>
+      <Toaster
+        position="top-center"
+        reverseOrder={false}
+        toastOptions={{
+          duration: 3000,
+          style: {
+            fontSize: "14px",
+          },
+          success: {
+            duration: 3000,
+          },
+          error: {
+            duration: 4000,
+          },
+        }}
+      />
+      <Routes>
+        <Route element={<Layout />}>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/product/:id" element={<ProductPage />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/category/:category" element={<CategoryPage />} />
 
-        <Route element={<ProtectedRoute allowedRoles={["user"]} />}>
-          <Route path="/viewcart" element={<Cart />} />
-          <Route path="/wishlist" element={<Wishlist />} />
-          <Route path="/payment/:orderId" element={<PaymentPage />} />
-          <Route path="/orders" element={<OrderPage />} />
-          <Route path="/seller-request" element={<BecomeSellerRequest />} />
-          <Route path="/checkout" element={<CheckoutPage />} />
-          <Route path="/order-success/:id" element={<OrderSuccess />} />
+          <Route element={<ProtectedRoute allowedRoles={["user"]} />}>
+            <Route path="/viewcart" element={<Cart />} />
+            <Route path="/wishlist" element={<Wishlist />} />
+            <Route path="/payment/:orderId" element={<PaymentPage />} />
+            <Route path="/orders" element={<OrderPage />} />
+            <Route path="/seller-request" element={<BecomeSellerRequest />} />
+            <Route path="/checkout" element={<CheckoutPage />} />
+            <Route path="/order-success/:id" element={<OrderSuccess />} />
 
-          <Route path="/myprofile" element={<ProfilePage />}>
-            <Route index element={<MainProfile />} />
-            <Route path="profile" element={<MainProfile />} />
-            <Route path="orders" element={<OrderPage />} />
-            <Route path="wishlist" element={<Wishlist />} />
-            <Route path="addresses" element={<Addresses />} />
-            <Route path="reviews" element={<MyReviews />}></Route>
-            <Route path="*" element={<NotFound />} />
+            <Route path="/myprofile" element={<ProfilePage />}>
+              <Route index element={<MainProfile />} />
+              <Route path="profile" element={<MainProfile />} />
+              <Route path="orders" element={<OrderPage />} />
+              <Route path="wishlist" element={<Wishlist />} />
+              <Route path="addresses" element={<Addresses />} />
+              <Route path="reviews" element={<MyReviews />}></Route>
+              <Route path="*" element={<NotFound />} />
+            </Route>
           </Route>
-        </Route>
 
-        <Route element={<ProtectedRoute allowedRoles={["seller"]} />}>
-          <Route path="/seller/dashboard" element={<SellerHomePage />} />
-          <Route path="/seller/addproduct" element={<AddProductPage />} />
-          <Route path="/seller/viewproducts" element={<ViewProducts />} />
-          <Route path="/seller/editproduct" element={<SingleProduct />} />
-          <Route path="/seller/orders" element={<SellerOrders />} />
-          <Route path="/seller/profile" element={<SellerProfile />} />
-          <Route path="/seller/orders/:id" element={<SellerOrderDetails />} />
-        </Route>
+          <Route element={<ProtectedRoute allowedRoles={["seller"]} />}>
+            <Route path="/seller/dashboard" element={<SellerHomePage />} />
+            <Route path="/seller/addproduct" element={<AddProductPage />} />
+            <Route path="/seller/viewproducts" element={<ViewProducts />} />
+            <Route path="/seller/editproduct" element={<SingleProduct />} />
+            <Route path="/seller/orders" element={<SellerOrders />} />
+            <Route path="/seller/profile" element={<SellerProfile />} />
+            <Route path="/seller/orders/:id" element={<SellerOrderDetails />} />
+          </Route>
 
-        <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
-          <Route path="/admin/dashboard" element={<AdminLayout />} />
-          <Route path="admin/userspage" element={<UsersPage />} />
-          <Route path="admin/allproductspage" element={<AllProductsPage />} />
-          <Route path="admin/orders" element={<AdminOrdersPage />} />
-          <Route path="admin/singlesellerpage" element={<SingleSellerPage />} />
-        </Route>
+          <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
+            <Route path="/admin/dashboard" element={<AdminLayout />} />
+            <Route path="admin/userspage" element={<UsersPage />} />
+            <Route path="admin/allproductspage" element={<AllProductsPage />} />
+            <Route path="admin/orders" element={<AdminOrdersPage />} />
+            <Route
+              path="admin/singlesellerpage"
+              element={<SingleSellerPage />}
+            />
+          </Route>
 
-        {/* 404 - Always Last */}
-        <Route path="*" element={<NotFound />} />
-      </Route>
-    </Routes>
+          {/* 404 - Always Last */}
+          <Route path="*" element={<NotFound />} />
+        </Route>
+      </Routes>
+    </>
   );
 }
 

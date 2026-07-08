@@ -14,6 +14,7 @@ import {
   removeFromCart,
   fetchCart,
 } from "@/redux/cartSlice";
+import toast from "react-hot-toast";
 
 export default function Cart() {
   const dispatch = useDispatch();
@@ -56,8 +57,10 @@ export default function Cart() {
 
     try {
       await api.delete(`/user/remove-cart-item/${itemId}`);
+      toast.success("product removed from cart");
     } catch (err) {
       dispatch(fetchCart());
+      toast.error(err.response?.data?.message || "Failed to remove product");
     }
   };
 
