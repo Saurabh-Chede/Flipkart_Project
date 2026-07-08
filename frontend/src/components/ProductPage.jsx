@@ -70,6 +70,12 @@ export default function ProductPage() {
   };
 
   const handleBuyNow = async () => {
+    if (!user) {
+      toast.error("Please login first");
+      navigate("/login");
+      return;
+    }
+
     try {
       setCartLoading(true);
 
