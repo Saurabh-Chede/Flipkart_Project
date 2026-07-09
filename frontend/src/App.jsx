@@ -22,7 +22,7 @@ import AllProductsPage from "./pages/AllProductsPage";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import api from "./config/axiosConfig";
-import { useDispatch } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
 import { useEffect } from "react";
 import { login, logout, setLoading } from "./redux/authSlice";
 import ProtectedRoute from "./routes/ProtectedRoute";
@@ -37,8 +37,10 @@ import AdminOrdersPage from "./pages/AdminOrdersPage";
 import MyReviews from "./pages/user/MyReviewPage";
 import NotFound from "./components/common/NotFound";
 import { Toaster } from "react-hot-toast";
+import FullPageLoader from "./components/common/FullPageLoader";
 
 function App() {
+  const authLoading = useSelector((state) => state.auth.loading);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -48,6 +50,7 @@ function App() {
 
         if (response.data.user) {
           dispatch(login(response.data.user));
+          dispatch(fetchCart());
         }
       } catch (error) {
         dispatch(logout());
@@ -57,9 +60,11 @@ function App() {
     };
 
     getLoggedInUser();
-
-    dispatch(fetchCart());
   }, [dispatch]);
+
+  if(authLoading){
+    return <FullPageLoader/>
+  }
 
   return (
     <>
