@@ -22,7 +22,7 @@ import AllProductsPage from "./pages/AllProductsPage";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import api from "./config/axiosConfig";
-import { useDispatch,useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { login, logout, setLoading } from "./redux/authSlice";
 import ProtectedRoute from "./routes/ProtectedRoute";
@@ -38,6 +38,7 @@ import MyReviews from "./pages/user/MyReviewPage";
 import NotFound from "./components/common/NotFound";
 import { Toaster } from "react-hot-toast";
 import FullPageLoader from "./components/common/FullPageLoader";
+import GuestUserRoute from "./routes/GuestUserRoute";
 
 function App() {
   const authLoading = useSelector((state) => state.auth.loading);
@@ -48,9 +49,14 @@ function App() {
       try {
         const response = await api.get("/auth/me");
 
-        if (response.data.user) {
-          dispatch(login(response.data.user));
-          dispatch(fetchCart());
+        const user = response.data.user;
+
+        if (user) {
+          dispatch(login(user));
+
+          if (user.role === "user") {
+            dispatch(fetchCart());
+          }
         }
       } catch (error) {
         dispatch(logout());
@@ -62,8 +68,8 @@ function App() {
     getLoggedInUser();
   }, [dispatch]);
 
-  if(authLoading){
-    return <FullPageLoader/>
+  if (authLoading) {
+    return <FullPageLoader />;
   }
 
   return (
@@ -86,11 +92,13 @@ function App() {
       />
       <Routes>
         <Route element={<Layout />}>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/product/:id" element={<ProductPage />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/category/:category" element={<CategoryPage />} />
+          <Route element={<GuestUserRoute />}>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/product/:id" element={<ProductPage />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/category/:category" element={<CategoryPage />} />
+          </Route>
 
           <Route element={<ProtectedRoute allowedRoles={["user"]} />}>
             <Route path="/viewcart" element={<Cart />} />
