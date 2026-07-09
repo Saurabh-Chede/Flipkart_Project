@@ -2,7 +2,7 @@
   {
     "id": 1,
     "title": "Mobile & Tablets",
-    "category": "electronics",
+    "category": "mobiles and tablets",
     "image": "/assets/product_images/mobiles.png"
   },
   {
@@ -22,7 +22,7 @@
   {
     "id": 4,
     "title": "Tvs and Appliances",
-    "category": "electronics",
+    "category": "tvs and appliances",
     "image": "/assets/product_images/Tv & Appliances.jpg"
   },
   {

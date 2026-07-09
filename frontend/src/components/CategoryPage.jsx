@@ -7,12 +7,14 @@ export default function CategoryPage() {
   const { category } = useParams();
 
   const categories = [
+    "mobiles and tablets",
     "electronics",
     "clothing",
     "furniture",
     "food",
     "grocerry",
     "fashion",
+    "tvs and appliances"
   ];
 
   const [products, setProducts] = useState([]);
