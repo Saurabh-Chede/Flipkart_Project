@@ -39,6 +39,7 @@ import NotFound from "./components/common/NotFound";
 import { Toaster } from "react-hot-toast";
 import FullPageLoader from "./components/common/FullPageLoader";
 import GuestUserRoute from "./routes/GuestUserRoute";
+import SearchPage from "./pages/SearchPage";
 
 function App() {
   const authLoading = useSelector((state) => state.auth.loading);
@@ -97,6 +98,7 @@ function App() {
             <Route path="/product/:id" element={<ProductPage />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/search" element={<SearchPage />} />
             <Route path="/category/:category" element={<CategoryPage />} />
           </Route>
 
