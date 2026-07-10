@@ -81,14 +81,8 @@ export default function FullPageLoader() {
             <svg width="144" height="84" viewBox="0 0 96 56">
               {/* Cargo box */}
               <rect x="2" y="10" width="52" height="30" rx="3" fill="#FFE500" />
-              <image
-                href="/assets/Logo.svg"
-                x="8"
-                y="19"
-                width="40"
-                height="14"
-                preserveAspectRatio="xMidYMid meet"
-              />
+              <rect x="16" y="19" width="24" height="14" rx="1.5" fill="#2874F0" opacity="0.85" />
+              <path d="M16 24 L28 19 L40 24" stroke="#FFE500" strokeWidth="1.5" fill="none" />
 
               {/* Cab */}
               <path d="M54 20 H74 L86 32 V40 H54 Z" fill="#FFFFFF" />
@@ -96,9 +90,7 @@ export default function FullPageLoader() {
 
               {/* Wheels */}
               <circle cx="18" cy="42" r="7" fill="#1A1A1A" />
-              <circle cx="18" cy="42" r="3" fill="#CCCCCC" className="wheel-spin" />
               <circle cx="72" cy="42" r="7" fill="#1A1A1A" />
-              <circle cx="72" cy="42" r="3" fill="#CCCCCC" className="wheel-spin" />
             </svg>
           </div>
         </div>
@@ -188,15 +180,6 @@ export default function FullPageLoader() {
           50%      { transform: translateY(-1.5px) rotate(-0.6deg); }
         }
 
-        .wheel-spin {
-          transform-origin: center;
-          animation: spin 0.35s linear infinite;
-        }
-        @keyframes spin {
-          from { transform: rotate(0deg); }
-          to   { transform: rotate(360deg); }
-        }
-
         .road-strip {
           background-image: repeating-linear-gradient(
             90deg,
@@ -249,7 +232,7 @@ export default function FullPageLoader() {
 
         @media (prefers-reduced-motion: reduce) {
           .bg-gradient, .ambient-dot, .logo-fade, .logo-shine, .truck-drive,
-          .truck-suspension, .wheel-spin, .road-strip, .package-float,
+          .truck-suspension, .road-strip, .package-float,
           .progress-fill, .message-fade {
             animation: none !important;
           }
