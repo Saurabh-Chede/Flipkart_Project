@@ -23,7 +23,7 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import api from "./config/axiosConfig";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { login, logout, setLoading } from "./redux/authSlice";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import BecomeSellerRequest from "./pages/user/BecomeSellerRequest";
@@ -40,10 +40,12 @@ import { Toaster } from "react-hot-toast";
 import FullPageLoader from "./components/common/FullPageLoader";
 import GuestUserRoute from "./routes/GuestUserRoute";
 import SearchPage from "./pages/SearchPage";
+import SpinnerLoader from "./components/SpinnerLoader";
 
 function App() {
   const authLoading = useSelector((state) => state.auth.loading);
   const dispatch = useDispatch();
+  const [showFancyLoader, setShowFancyLoader] = useState(false);
 
   useEffect(() => {
     const getLoggedInUser = async () => {
@@ -69,8 +71,22 @@ function App() {
     getLoggedInUser();
   }, [dispatch]);
 
+  useEffect(() => {
+    let timer;
+
+    if (authLoading) {
+      timer = setTimeout(() => {
+        setShowFancyLoader(true);
+      }, 2000);
+    } else {
+      setShowFancyLoader(false);
+    }
+
+    return () => clearTimeout(timer);
+  }, [authLoading]);
+
   if (authLoading) {
-    return <FullPageLoader />;
+    return showFancyLoader ? <FullPageLoader /> : <SpinnerLoader />;
   }
 
   return (
