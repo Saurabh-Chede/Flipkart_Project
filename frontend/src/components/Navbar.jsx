@@ -19,6 +19,7 @@ export default function Navbar() {
   const handleSearch = (e) => {
     if (e.key === "Enter" && search.trim()) {
       navigate(`/search?keyword=${encodeURIComponent(search)}`);
+      setSearch("");
     }
   };
 
@@ -50,7 +51,7 @@ export default function Navbar() {
             </Link>
 
             {/* SEARCH */}
-            <div className="hidden lg:flex flex-1 max-w-150 ml-6">
+            <div className="hidden sm:flex flex-1 max-w-150 ml-6">
               <div className="flex items-center w-full bg-slate-100 px-3 rounded-md">
                 <input
                   type="text"
@@ -103,6 +104,18 @@ export default function Navbar() {
             <img src={threeDots} alt="more" className="hidden md:block" />
           </div>
         </nav>
+        <div className="sm:hidden px-4 pb-3">
+          <div className="bg-slate-100 rounded-md">
+            <input
+              type="text"
+              placeholder="Search products..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              onKeyDown={handleSearch}
+              className="w-full px-3 py-2 bg-transparent outline-none text-sm"
+            />
+          </div>
+        </div>
       </header>
     </>
   );
