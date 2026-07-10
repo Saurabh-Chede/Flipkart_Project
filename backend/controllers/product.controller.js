@@ -40,7 +40,45 @@ export const updateProduct = async (req, res) => {};
 
 export const deleteProduct = async (req, res) => {};
 
-export const searchProducts = async (req, res) => {};
+export const searchProducts = async (req, res) => {
+  try {
+    const { keyword } = req.query;
+
+    if (!keyword) {
+      return res.status(400).json({
+        success: false,
+        message: "Search keyword required",
+      });
+    }
+
+    const products = await ProductModel.find({
+      $or: [
+        {
+          name: {
+            $regex: keyword,
+            $options: "i",
+          },
+        },
+        {
+          category: {
+            $regex: keyword,
+            $options: "i",
+          },
+        },
+      ],
+    });
+
+    res.status(200).json({
+      success: true,
+      products,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
 
 export const filterProducts = async (req, res) => {};
 
