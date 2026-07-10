@@ -5,6 +5,7 @@ export default function MainProfile() {
   const [isEditingPersonal, setIsEditingPersonal] = useState(false);
   const [isEditingEmail, setIsEditingEmail] = useState(false);
   const [isEditingMobile, setIsEditingMobile] = useState(false);
+  const [gender, setGender] = useState("Male");
   const user = useSelector((state) => state.auth.user);
   const firstName = user?.name?.split(" ")[0] || "";
   const lastName = user?.name?.split(" ")[1] || "";
@@ -46,6 +47,9 @@ export default function MainProfile() {
                 <input
                   type="radio"
                   name="gender"
+                  value="Male"
+                  checked={gender === "Male"}
+                  onChange={(e) => setGender(e.target.value)}
                   disabled={!isEditingPersonal}
                 />{" "}
                 Male
@@ -54,6 +58,9 @@ export default function MainProfile() {
                 <input
                   type="radio"
                   name="gender"
+                  value="Female"
+                  checked={gender === "Female"}
+                  onChange={(e) => setGender(e.target.value)}
                   disabled={!isEditingPersonal}
                 />{" "}
                 Female
