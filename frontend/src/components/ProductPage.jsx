@@ -97,6 +97,7 @@ export default function ProductPage() {
   };
 
   const handleWishlist = async () => {
+    if(!user) return
     try {
       const { data } = await api.post("/wishlist/toggle", {
         productId: product._id,
@@ -113,6 +114,7 @@ export default function ProductPage() {
   };
 
   const fetchWishlistStatus = async () => {
+    if(!user) return
     try {
       const { data } = await api.get("/wishlist");
 
@@ -148,7 +150,6 @@ export default function ProductPage() {
     };
 
     getProduct();
-    fetchWishlistStatus();
   }, [id]);
 
   useEffect(() => {
@@ -156,6 +157,12 @@ export default function ProductPage() {
       fetchReviews();
     }
   }, [product]);
+
+  useEffect(() => {
+    if (user) {
+      fetchWishlistStatus();
+    }
+  }, [user, id]);
 
   if (loading) {
     return (

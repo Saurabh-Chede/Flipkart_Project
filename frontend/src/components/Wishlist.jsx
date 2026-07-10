@@ -60,8 +60,7 @@ export default function Wishlist() {
         <h2 className="text-2xl font-bold mb-2">Your Wishlist is Empty</h2>
 
         <p className="text-muted-foreground text-center mb-6">
-          Save items you like in your wishlist. Review them anytime and easily
-          move them to cart.
+          Save items you like in your wishlist.
         </p>
 
         <Button
