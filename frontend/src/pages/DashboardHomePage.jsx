@@ -90,20 +90,6 @@ export default function DashboardHome() {
 
   const COLORS = ["#4F46E5", "#10B981", "#F59E0B", "#EF4444", "#8B5CF6"];
 
-  // const salesData = [
-  //   { month: "Jan", sales: 120 },
-  //   { month: "Feb", sales: 210 },
-  //   { month: "Mar", sales: 180 },
-  //   { month: "Apr", sales: 240 },
-  //   { month: "May", sales: 200 },
-  //   { month: "Jun", sales: 300 },
-  // ];
-
-  // const topCategories = [
-  //   { category: "Electronics", value: 150 },
-  //   { category: "Fashion", value: 120 },
-  //   { category: "Home Appliances", value: 90 },
-  // ];
 
   return (
     <div className="space-y-6 p-4 md:p-6 bg-gray-50">
@@ -193,50 +179,8 @@ export default function DashboardHome() {
       </div>
 
       {/* RECENT ORDERS */}
-      {/* <div className="overflow-x-auto bg-white rounded-xl shadow border border-gray-200 p-4">
-        <h2 className="text-lg font-semibold text-gray-800 mb-4">
-          Recent Orders
-        </h2>
 
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
-            <tr>
-              {["Order ID", "Customer", "Product", "Status", "Payment"].map(
-                (head) => (
-                  <th
-                    key={head}
-                    className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase"
-                  >
-                    {head}
-                  </th>
-                ),
-              )}
-            </tr>
-          </thead>
-
-          <tbody>
-            {recentOrders.length === 0 ? (
-              <tr>
-                <td colSpan={5} className="px-4 py-4 text-gray-500">
-                  No recent orders
-                </td>
-              </tr>
-            ) : (
-              recentOrders.map((order, idx) => (
-                <tr key={idx}>
-                  <td className="px-4 py-2">{order.id}</td>
-                  <td className="px-4 py-2">{order.customer}</td>
-                  <td className="px-4 py-2">{order.product}</td>
-                  <td className="px-4 py-2">{order.status}</td>
-                  <td className="px-4 py-2">{order.payment}</td>
-                </tr>
-              ))
-            )}
-          </tbody>
-        </table>
-      </div> */}
-
-      <div className="overflow-x-auto bg-white rounded-xl shadow border border-gray-200 p-4">
+      <div className="overflow-x-auto scrollbar-hide bg-white rounded-xl shadow border border-gray-200 p-4">
         <h2 className="text-lg font-semibold text-gray-800 mb-4">
           Recent Orders
         </h2>

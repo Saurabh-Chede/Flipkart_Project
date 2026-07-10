@@ -63,7 +63,7 @@ export default function UsersPage() {
       </div>
 
       {/* Table */}
-      <div className="bg-white shadow rounded-xl overflow-hidden">
+      <div className="bg-white shadow rounded-xl overflow-x-auto scrollbar-hide">
         <table className="w-full text-sm">
           <thead className="bg-gray-100 text-gray-600">
             <tr>

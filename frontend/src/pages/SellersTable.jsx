@@ -47,8 +47,8 @@ export default function SellersPage() {
     <div>
       <h1 className="text-2xl font-semibold text-gray-800 mb-4">All Sellers</h1>
 
-      <div className="overflow-x-auto">
-        <table className="min-w-full bg-white border border-gray-200 rounded-xl overflow-hidden">
+      <div className="overflow-x-auto scrollbar-hide">
+        <table className="min-w-full bg-white border border-gray-200 rounded-xl">
           <thead className="bg-gray-100">
             <tr>
               {["ID", "Name", "Store", "Email", "Status"].map((heading) => (
