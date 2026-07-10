@@ -140,7 +140,7 @@ export default function Addresses() {
           >
             <div className="grid md:grid-cols-2 gap-4">
               <div>
-                <Label>Full Name</Label>
+                <Label className='pb-1'>Full Name</Label>
                 <Input
                   name="fullName"
                   value={formData.fullName}
@@ -150,7 +150,7 @@ export default function Addresses() {
               </div>
 
               <div>
-                <Label>Phone Number</Label>
+                <Label className='pb-1'>Phone Number</Label>
                 <Input
                   name="phone"
                   value={formData.phone}
@@ -161,7 +161,7 @@ export default function Addresses() {
             </div>
 
             <div>
-              <Label>Pincode</Label>
+              <Label className='pb-1'>Pincode</Label>
               <Input
                 name="pincode"
                 value={formData.pincode}
@@ -171,7 +171,7 @@ export default function Addresses() {
             </div>
 
             <div>
-              <Label>Address Line</Label>
+              <Label className='pb-1'>Address Line</Label>
               <Input
                 name="addressLine"
                 value={formData.addressLine}
@@ -182,7 +182,7 @@ export default function Addresses() {
 
             <div className="grid md:grid-cols-2 gap-4">
               <div>
-                <Label>City</Label>
+                <Label className='pb-1'>City</Label>
                 <Input
                   name="city"
                   value={formData.city}
@@ -192,7 +192,7 @@ export default function Addresses() {
               </div>
 
               <div>
-                <Label>State</Label>
+                <Label className='pb-1'>State</Label>
                 <Input
                   name="state"
                   value={formData.state}
@@ -204,7 +204,7 @@ export default function Addresses() {
 
             <Button
               type="submit"
-              className="w-full"
+              className="w-full bg-blue-500 rounded-none"
             >
               Save Address
             </Button>

@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { logout } from "../redux/authSlice";
 import api from "../config/axiosConfig";
 import toast from "react-hot-toast";
+import SidebarLink from "./common/SidebarLink";
 
 export default function Sidebar() {
   const dispatch = useDispatch();
@@ -25,102 +26,61 @@ export default function Sidebar() {
 
   return (
     <div className="flex flex-col">
-
       {/* PROFILE HEADER */}
-      <div className="flex items-center gap-4 border-b border-b-gray-300 py-4 px-4">
-        <img src="/assets/download.svg" alt="myprofile" />
-        <h2 className="text-gray-500 font-medium">MY PROFILE</h2>
-      </div>
+      <NavLink to="/myprofile/orders">
+        <div className="flex items-center gap-4 border-b border-b-gray-300 py-4 px-4">
+          <img src="/assets/download.svg" alt="myprofile" />
+          <h2 className="text-gray-500 font-medium">MY ORDERS</h2>
+        </div>
+      </NavLink>
 
       {/* ACCOUNT SETTINGS */}
       <div className="flex flex-col gap-2">
-
         <div className="flex items-center gap-4 py-4 px-4">
           <img src="/assets/account-settings.svg" width={20} height={20} />
           <h2 className="text-gray-500 font-medium">ACCOUNT SETTINGS</h2>
         </div>
 
         <div className="border-b border-b-gray-300">
-
-          <NavLink to="/myprofile">
-            <div className="px-12 py-3 hover:bg-gray-200 bg-blue-50 text-blue-600 text-sm">
-              Profile Information
-            </div>
-          </NavLink>
-
-          <NavLink to="/myprofile/addresses">
-            <div className="px-12 py-3 hover:bg-gray-200 text-sm">
-              Manage Addresses
-            </div>
-          </NavLink>
+          <SidebarLink to="/myprofile" end>Profile Information</SidebarLink>
+          <SidebarLink to="/myprofile/addresses">Manage Addresses</SidebarLink>
         </div>
       </div>
 
       {/* PAYMENTS */}
       <div className="flex flex-col gap-2">
-
         <div className="flex items-center gap-4 py-4 px-4">
           <img src="/assets/payments.svg" width={20} height={20} />
           <h2 className="text-gray-500 font-medium">PAYMENTS</h2>
         </div>
 
         <div className="border-b border-b-gray-300">
+          <SidebarLink to="/myprofile/giftcards">Gift Cards</SidebarLink>
 
-          <NavLink to="/myprofile/giftcards">
-            <div className="px-12 py-3 hover:bg-gray-200 text-sm">
-              Gift Cards
-            </div>
-          </NavLink>
-
-          <NavLink to="/myprofile/upi">
-            <div className="px-12 py-3 hover:bg-gray-200 text-sm">
-              Saved UPI
-            </div>
-          </NavLink>
-
-          {/* <NavLink to="/myprofile/cards">
-            <div className="px-12 py-3 hover:bg-gray-200 text-sm">
-              Saved Cards
-            </div>
-          </NavLink> */}
-
+          <SidebarLink to="/myprofile/upi">Saved UPI</SidebarLink>
+          <SidebarLink to="/myprofile/cards">Saved Cards</SidebarLink>
         </div>
       </div>
 
       {/* MY STUFF */}
       <div className="flex flex-col gap-2">
-
         <div className="flex items-center gap-4 py-4 px-4">
           <img src="/assets/mystuff.svg" width={20} height={20} />
           <h2 className="text-gray-500 font-medium">MY STUFF</h2>
         </div>
 
         <div className="border-b border-b-gray-300">
+          <SidebarLink to="/myprofile/coupons">My Coupons</SidebarLink>
 
-          <NavLink to="/myprofile/coupons">
-            <div className="px-12 py-3 hover:bg-gray-200 text-sm">
-              My Coupons
-            </div>
-          </NavLink>
+          <SidebarLink to="/myprofile/reviews">
+            My Reviews & Ratings
+          </SidebarLink>
 
-          <NavLink to="/myprofile/reviews">
-            <div className="px-12 py-3 hover:bg-gray-200 text-sm">
-              My Reviews & Ratings
-            </div>
-          </NavLink>
+          <SidebarLink to="/myprofile/notifications">
+            All Notifications
+          </SidebarLink>
 
-          <NavLink to="/myprofile/notifications">
-            <div className="px-12 py-3 hover:bg-gray-200 text-sm">
-              All Notifications
-            </div>
-          </NavLink>
-
-          <NavLink to="/myprofile/wishlist">
-            <div className="px-12 py-3 hover:bg-gray-200 text-sm">
-              My Wishlist
-            </div>
-          </NavLink>
-
+          <SidebarLink to="/myprofile/wishlist">My Wishlist</SidebarLink>
         </div>
       </div>
 
@@ -132,7 +92,6 @@ export default function Sidebar() {
         <AiOutlineLogout className="text-blue-600" />
         <h2 className="text-gray-500 font-medium">Logout</h2>
       </div>
-
     </div>
   );
 }

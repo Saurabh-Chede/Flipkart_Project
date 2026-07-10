@@ -67,7 +67,7 @@ const WriteReviewDialog = ({
 
           <Button
             onClick={handleSubmit}
-            className="w-full"
+            className="w-full bg-blue-600 rounded-none hover:bg-blue-400"
           >
             Submit Review
           </Button>
