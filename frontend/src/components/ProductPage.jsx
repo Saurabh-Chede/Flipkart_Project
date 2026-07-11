@@ -97,7 +97,7 @@ export default function ProductPage() {
   };
 
   const handleWishlist = async () => {
-    if(!user) return
+    if (!user) return;
     try {
       const { data } = await api.post("/wishlist/toggle", {
         productId: product._id,
@@ -105,8 +105,10 @@ export default function ProductPage() {
 
       if (data.action === "added") {
         setWishlisted(true);
+        toast.success("Added to wishlist");
       } else {
         setWishlisted(false);
+        toast.success("Removed from wishlist");
       }
     } catch (error) {
       console.log(error);
@@ -114,7 +116,7 @@ export default function ProductPage() {
   };
 
   const fetchWishlistStatus = async () => {
-    if(!user) return
+    if (!user) return;
     try {
       const { data } = await api.get("/wishlist");
 

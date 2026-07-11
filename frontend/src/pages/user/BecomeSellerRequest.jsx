@@ -11,6 +11,7 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import toast from "react-hot-toast";
 
 export default function BecomeSellerRequest() {
   const [message, setMessage] = useState("");
@@ -24,7 +25,7 @@ export default function BecomeSellerRequest() {
         message,
       });
 
-      alert(res.data.message);
+      toast.success(res.data.message);
       setMessage("");
     } catch (error) {
       alert(
