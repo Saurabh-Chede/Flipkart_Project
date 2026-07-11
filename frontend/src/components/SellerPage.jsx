@@ -2,14 +2,10 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import api from "@/config/axiosConfig";
 
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 import { Button } from "@/components/ui/button";
+import { Badge } from "./ui/badge";
 
 import {
   Package,
@@ -107,7 +103,6 @@ const SellerHomePage = () => {
   return (
     <div className="min-h-screen bg-slate-100 p-6">
       <div className="max-w-7xl mx-auto space-y-6">
-
         {/* HEADER */}
         <div className="flex flex-col md:flex-row justify-between md:items-center gap-4">
           <div>
@@ -131,17 +126,11 @@ const SellerHomePage = () => {
             <Card key={index}>
               <CardContent className="p-5 flex justify-between items-center">
                 <div>
-                  <p className="text-sm text-muted-foreground">
-                    {card.title}
-                  </p>
-                  <h2 className="text-2xl font-bold mt-2">
-                    {card.value}
-                  </h2>
+                  <p className="text-sm text-muted-foreground">{card.title}</p>
+                  <h2 className="text-2xl font-bold mt-2">{card.value}</h2>
                 </div>
 
-                <div className="p-3 rounded-lg bg-slate-100">
-                  {card.icon}
-                </div>
+                <div className="p-3 rounded-lg bg-slate-100">{card.icon}</div>
               </CardContent>
             </Card>
           ))}
@@ -184,7 +173,7 @@ const SellerHomePage = () => {
             <CardTitle>Recent Orders</CardTitle>
           </CardHeader>
 
-          <CardContent>
+          {/* <CardContent>
             {recentOrders.length === 0 ? (
               <p>No Orders Found</p>
             ) : (
@@ -205,6 +194,40 @@ const SellerHomePage = () => {
 
                     <div>
                       ₹{order.totalAmount?.toLocaleString()}
+                    </div>
+
+                    <div>
+                      <span className="text-sm font-medium">
+                        {order.status}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </CardContent> */}
+          <CardContent>
+            {recentOrders.length === 0 ? (
+              <p>No Orders Found</p>
+            ) : (
+              <div className="space-y-4">
+                {recentOrders.map((order) => (
+                  <div
+                    key={order.id}
+                    className="flex justify-between items-center border rounded-lg p-4"
+                  >
+                    <div>
+                      <h3 className="font-semibold">#{order.id.slice(-6)}</h3>
+
+                      <p className="text-sm text-muted-foreground">
+                        {order.customer}
+                      </p>
+
+                      <p className="text-sm">{order.product}</p>
+                    </div>
+
+                    <div>
+                      <Badge>{order.payment}</Badge>
                     </div>
 
                     <div>
@@ -245,7 +268,6 @@ const SellerHomePage = () => {
             )}
           </CardContent>
         </Card>
-
       </div>
     </div>
   );
