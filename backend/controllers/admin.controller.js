@@ -105,7 +105,7 @@ export const getSellerRequests = async (req, res) => {
   try {
     const requests = await UserModel.find({
       sellerRequestStatus: "pending",
-    }).select("name email sellerRequestStatus");
+    }).select("name email sellerRequestStatus createdAt");
 
     return res.status(200).json({
       success: true,
