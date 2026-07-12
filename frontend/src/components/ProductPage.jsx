@@ -1,9 +1,8 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import api from "@/config/axiosConfig";
-import { FiHeart } from "react-icons/fi";
 import { FaHeart } from "react-icons/fa";
-import { Tag, Star } from "lucide-react";
+import { Tag, Star, HeartPlus } from "lucide-react";
 import { FaShoppingCart } from "react-icons/fa";
 import { IoMdFlash } from "react-icons/io";
 import { fetchCart } from "@/redux/cartSlice";
@@ -188,7 +187,7 @@ export default function ProductPage() {
   );
 
   return (
-    <div className="bg-gray-100 pt-6 pb-10 min-h-screen">
+    <div className="bg-gray-100 min-h-screen">
       <div className="max-w-7xl mx-auto bg-white shadow-sm">
         <div className="flex flex-col md:flex-row gap-8 p-6">
           {/* LEFT SECTION */}
@@ -197,12 +196,12 @@ export default function ProductPage() {
             <div className="relative p-4 w-full">
               <button
                 onClick={handleWishlist}
-                className="absolute top-4 right-4 z-10 bg-white p-2 rounded-full shadow hover:scale-110 transition"
+                className="absolute top-4 right-4 z-10 bg-white p-2 rounded-lg shadow hover:scale-110 transition"
               >
                 {wishlisted ? (
                   <FaHeart className="text-red-500 text-xl" />
                 ) : (
-                  <FiHeart className="text-gray-600 text-xl" />
+                  <HeartPlus strokeWidth={1} className="text-gray-600 text-xl" />
                 )}
               </button>
 
