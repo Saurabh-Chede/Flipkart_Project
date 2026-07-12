@@ -110,7 +110,7 @@ export const getTopDeals = async (req, res) => {
     })
       .sort({ discountPercentage: -1, createdAt: -1 }) // Highest discount first
       .limit(6)
-      .select("name image price originalPrice discountPercentage stock slug");
+      .select("name image price originalPrice ratings discountPercentage stock slug");
 
     return res.status(200).json({
       success: true,
