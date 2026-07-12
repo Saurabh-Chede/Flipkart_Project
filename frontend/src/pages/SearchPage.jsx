@@ -12,15 +12,12 @@ export default function SearchPage() {
 
   const { data: products = [], isLoading: loading } = useQuery({
     queryKey: ["search-products", keyword],
-
     queryFn: async () => {
       const { data } = await api.get(
         `/product/search?keyword=${encodeURIComponent(keyword)}`,
       );
-
       return data.products || [];
     },
-
     enabled: !!keyword,
   });
 
@@ -65,7 +62,6 @@ export default function SearchPage() {
         {/* PRODUCTS */}
         <main className="flex-1">
           <SortBar sortBy={sortBy} setSortBy={setSortBy} />
-
           {loading ? (
             <div className="text-center py-10">Loading Products...</div>
           ) : filteredProducts.length === 0 ? (
