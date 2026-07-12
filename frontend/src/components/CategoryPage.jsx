@@ -76,7 +76,7 @@ export default function CategoryPage() {
         />
 
         {/* PRODUCTS */}
-        <main className="flex-1">
+        <main className="flex-1 bg-white">
           <SortBar sortBy={sortBy} setSortBy={setSortBy} />
 
           {loading ? (
@@ -87,7 +87,7 @@ export default function CategoryPage() {
             </div>
           ) : (
             <>
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-2">
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4">
                 {filteredProducts.map((product) => (
                   <ProductCard key={product._id} product={product} />
                 ))}

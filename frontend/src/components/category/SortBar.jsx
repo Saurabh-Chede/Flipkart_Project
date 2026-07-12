@@ -1,6 +1,6 @@
 export default function SortBar({ sortBy, setSortBy }) {
   return (
-    <div className="bg-white px-4 py-3 mb-2 flex gap-6 text-sm">
+    <div className="bg-white px-4 py-3 flex gap-6 text-sm border-b border-b-gray-200/70">
       <span className="font-semibold">Sort By</span>
 
       <button
