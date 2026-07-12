@@ -57,7 +57,8 @@ function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-black/50 flex justify-center items-center px-4">
+    // <div className="min-h-screen bg-black/50 flex justify-center items-center px-4">
+    <div className="fixed inset-0 bg-black/50 flex justify-center items-center px-4 z-50">
       <div className="relative bg-white w-full max-w-4xl md:h-[530px] flex flex-col md:flex-row rounded-sm overflow-hidden shadow-lg">
         <button
           type="button"

@@ -110,10 +110,11 @@ function App() {
       <Routes>
         <Route element={<Layout />}>
           <Route element={<GuestUserRoute />}>
-            <Route path="/" element={<HomePage />} />
+            <Route path="/" element={<HomePage />}>
+              <Route path="login" element={<Login />} />
+              <Route path="register" element={<Register />} />
+            </Route>
             <Route path="/product/:id" element={<ProductPage />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
             <Route path="/search" element={<SearchPage />} />
             <Route path="/category/:category" element={<CategoryPage />} />
           </Route>

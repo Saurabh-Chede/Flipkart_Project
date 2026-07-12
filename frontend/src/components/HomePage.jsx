@@ -4,6 +4,7 @@ import Topdeals from "./Topdeals";
 import Clothes from "./Clothes";
 import Kidstoys from "./Kidstoys";
 import Banner from "./Banner";
+import { Outlet } from "react-router-dom";
 
 export default function HomePage() {
   const [category, setCategory] = useState([]);
@@ -48,6 +49,7 @@ export default function HomePage() {
       <Topdeals />
       <Clothes />
       <Kidstoys/>
+      <Outlet/>
     </div>
   );
 }

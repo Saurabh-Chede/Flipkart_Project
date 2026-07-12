@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import api from "@/config/axiosConfig";
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-
 import { Button } from "@/components/ui/button";
 import { Badge } from "./ui/badge";
+import { StatsCardSkeleton } from "./common/StatsCardSkeleton";
 
 import {
   Package,
@@ -48,14 +47,6 @@ const SellerHomePage = () => {
       setLoading(false);
     }
   };
-
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center min-h-screen">
-        Loading Dashboard...
-      </div>
-    );
-  }
 
   const cards = [
     {
@@ -121,19 +112,29 @@ const SellerHomePage = () => {
         </div>
 
         {/* STATS */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          {cards.map((card, index) => (
-            <Card key={index}>
-              <CardContent className="p-5 flex justify-between items-center">
-                <div>
-                  <p className="text-sm text-muted-foreground">{card.title}</p>
-                  <h2 className="text-2xl font-bold mt-2">{card.value}</h2>
-                </div>
 
-                <div className="p-3 rounded-lg bg-slate-100">{card.icon}</div>
-              </CardContent>
-            </Card>
-          ))}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          {loading
+            ? Array(8)
+                .fill(0)
+                .map((_, index) => <StatsCardSkeleton key={index} />)
+            : cards.map((card, index) => (
+                <Card key={index}>
+                  <CardContent className="p-5 flex justify-between items-center">
+                    <div>
+                      <p className="text-sm text-muted-foreground">
+                        {card.title}
+                      </p>
+
+                      <h2 className="text-2xl font-bold mt-2">{card.value}</h2>
+                    </div>
+
+                    <div className="p-3 rounded-lg bg-slate-100">
+                      {card.icon}
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
         </div>
 
         {/* QUICK ACTIONS */}
