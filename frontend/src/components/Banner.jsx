@@ -16,7 +16,6 @@ function Banner() {
     "https://rukminim2.flixcart.com/fk-p-flap/1600/780/image/e86320e8fc5534bb.jpg?q=80",
     "https://rukminim2.flixcart.com/fk-p-flap/1600/780/image/360309e20ece7645.png?q=80",
     "https://rukminim2.flixcart.com/fk-p-flap/1600/780/image/796b4df85e03aaae.png?q=80",
-    "https://rukminim2.flixcart.com/fk-p-flap/1600/780/image/360309e20ece7645.png?q=80",
   ];
 
   // 2. Wrap the plugin in a ref so it persists across renders

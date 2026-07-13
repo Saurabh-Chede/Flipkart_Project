@@ -20,9 +20,9 @@ export default function Clothes() {
 
   return (
     <section className=" py-4">
-      <div className="max-w-7xl mx-auto px-4">
+      <div className="max-w-7xl mx-auto md:px-2">
 
-        <div className="bg-white rounded-md shadow-sm p-4">
+        <div className="bg-white rounded-md  p-4">
 
           <h2 className="text-xl font-semibold mb-4">
             Trending Fashion
@@ -38,7 +38,7 @@ export default function Clothes() {
               ))}
             </div>
           ) : (
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2">
 
               {category.map((product) => (
                 <Link
