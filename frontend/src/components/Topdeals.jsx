@@ -62,6 +62,8 @@ export default function TopDeals() {
                         <img
                           height={250}
                           width={250}
+                          loading="lazy"
+                          decoding="async"
                           src={product.image}
                           alt={product.name}
                           className="max-h-full max-w-full object-contain"
