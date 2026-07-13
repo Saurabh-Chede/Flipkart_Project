@@ -38,7 +38,7 @@ function Banner() {
         className="w-full relative"
       >
         <CarouselContent className="-ml-2">
-          {/* {banners.map((image, index) => (
+          {banners.map((image, index) => (
             <CarouselItem
               key={index}
               className="pl-2 basis-full sm:basis-1/2 md:basis-1/3"
@@ -47,23 +47,9 @@ function Banner() {
                 <img
                   src={image}
                   alt={`Banner ${index}`}
-                  className="w-full object-cover aspect-[41/20]"
+                  className="w-full object-cover aspect-41/20"
                 />
               </div>
-            </CarouselItem>
-          ))} */}
-          {banners.map((image, index) => (
-            <CarouselItem key={index} className="pl-2 basis-full">
-              <img
-                src={image}
-                alt="Offer banner"
-                loading={index === 0 ? "eager" : "lazy"}
-                fetchPriority={index === 0 ? "high" : "auto"}
-                decoding="async"
-                width="1600"
-                height="780"
-                className="w-full aspect-[41/20] object-cover rounded-xl"
-              />
             </CarouselItem>
           ))}
         </CarouselContent>
