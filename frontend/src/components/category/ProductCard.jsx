@@ -11,7 +11,7 @@ export default function ProductCard({ product }) {
     <Link
       to={`/product/${product._id}`}
       key={product._id}
-      className="group rounded-none p-3 hover:shadow-[0_4px_20px_rgba(0,0,0,0.12)] transition-all duration-200"
+      className="group rounded-none p-3 hover:shadow-[0_4px_20px_rgba(0,0,0,0.12)] border border-gray-300/30  transition-all duration-200"
     >
       {/* Product Image */}
       <div className="relative h-48 flex items-center justify-center overflow-hidden">

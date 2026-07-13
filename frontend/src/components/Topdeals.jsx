@@ -60,9 +60,11 @@ export default function TopDeals() {
                       {/* Product Image */}
                       <div className="relative bg-gray-100 h-60 rounded-md overflow-hidden flex items-center justify-center">
                         <img
+                          height={250}
+                          width={250}
                           src={product.image}
                           alt={product.name}
-                          className="h-full w-full object-contain"
+                          className="max-h-full max-w-full object-contain"
                         />
 
                         {/* Rating */}
