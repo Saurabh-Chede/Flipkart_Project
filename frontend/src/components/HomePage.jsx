@@ -16,7 +16,7 @@ export default function HomePage() {
   }, []);
 
   return (
-    <div className="flex flex-col px-0 md:px-4.5 bg-gray-100">
+    <div className="flex flex-col px-0 md:px-4.5">
       <div className="bg-white mt-2.5 rounded-xs shadow-sm mx-4 md:mx-9 py-4">
         <div className="flex justify-between gap-4 overflow-x-auto px-4 scrollbar-hide">
           {category.map((product) => (

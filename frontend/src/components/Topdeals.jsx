@@ -24,7 +24,7 @@ export default function TopDeals() {
   }, []);
 
   return (
-    <section className="bg-[#f1f3f6]">
+    <section className="">
       <div className="max-w-7xl mx-auto px-4">
         <div className="bg-white rounded-md p-4">
           <div className="flex items-center justify-between mb-4">
